@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Client = sequelize.define("Client", {
+  var client = sequelize.define("client", {
     username: {
       type: DataTypes.STRING,
       allowNull: false
@@ -27,11 +27,12 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Client.associate = function(models) {
-    Client.hasMany(models.Favorites, {
+  client.associate = function(models) {
+    client.hasMany(models.favorite, {
       onDelete: "cascade"
     });
+    client.belongsTo(models.seenby, {});
   };
 
-  return Client;
+  return client;
 };

@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Owner = sequelize.define("Owner", {
+  var owner = sequelize.define("owner", {
     username: {
       type: DataTypes.STRING,
       allowNull: false
@@ -49,13 +49,11 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Owner.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-    Owner.hasMany(models.Property, {
+  owner.associate = function(models) {
+    owner.hasMany(models.property, {
       onDelete: "cascade"
     });
   };
 
-  return Owner;
+  return owner;
 };

@@ -1,9 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Property = sequelize.define("Property", {
-    ownerid: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
+  var property = sequelize.define("property", {
     info: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -22,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     propertype: {
       type: DataTypes.STRING,
-      allowNull: false
+      defaultValue: ""
     },
     price_string: {
       type: DataTypes.STRING,
@@ -49,16 +45,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Property.associate = function(models) {
-    Property.belongsTo(models.Owner, {
+  property.associate = function(models) {
+    property.belongsTo(models.owner, {
       foreignKey: {
         allowNull: false
       }
     });
-    Property.hasMany(models.Photo, {
-      onDelete: "cascade"
-    });
   };
 
-  return Property;
+  return property;
 };

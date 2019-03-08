@@ -1,25 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-  var Favorites = sequelize.define("Favorites", {
-    propertyId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    clientID: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  });
+  var favorite = sequelize.define("favorite", {});
 
-  Favorites.associate = function(models) {
-    Favorites.belongsTo(models.Client, {
+  favorite.associate = function(models) {
+    favorite.belongsTo(models.client, {
       foreignKey: {
         allowNull: false
       }
     });
-    Favorites.hasMany(models.Property, {
-      onDelete: "cascade"
-    });
+    favorite.hasMany(models.property, {});
   };
 
-  return Favorites;
+  return favorite;
 };
