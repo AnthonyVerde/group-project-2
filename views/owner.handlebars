@@ -1,11 +1,26 @@
 <section class="container">
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
-            <h2>Owner's page</h2>
+            <hr>
+            <h1>OWNER's PAGE</h1>
+            <h2>Welcome back {{client.firstName}} {{client.lastName}}!</h2>
             <p>Here the owner can see his-her properties.</p>
         </div>
     </div>
     <hr>
+
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Account info</h5>
+            <p class="card-text">First name: <b>{{client.firstName}}</b></p>
+            <p class="card-text">Last name: <b>{{client.lastName}}</b></p>
+            <p class="card-text">Email: <b>{{client.email}}</b></p>
+            <p class="card-text">Phone: <b>{{client.phone}}</b></p>
+            <p class="card-text">Address: <b>{{client.address1}} {{client.address2}}, {{client.city}}, {{client.province}}, {{client.country}}</b></p>
+        </div>
+    </div>
+    <hr>
+
     <div class="alert alert-success" role="alert">
         Here are your properties
     </div>

@@ -23,8 +23,10 @@ var API = {
     console.log("URL: api/client/" + client.username);
 
     return $.ajax({
-      url: "client/" + client.username,
+      url: "api/client/" + client.username,
       type: "GET"
+    }).then(function(data) {
+      return data;
     });
   },
 
@@ -123,6 +125,14 @@ var handleDeleteBtnClick = function() {
 };
 
 ///// END OF DEMO CODE /////
+var HTTP = {
+  serveClientPage: function(clientID) {
+    return $.ajax({
+      url: "/client/" + clientID,
+      type: "GET"
+    });
+  }
+};
 
 var handleBtnClientLogin = function() {
   event.preventDefault();
@@ -133,14 +143,21 @@ var handleBtnClientLogin = function() {
   };
 
   API.getClients(client).then(function(data) {
-    console.log("***********************");
+    console.log("***********************\nReturn from API.getClients");
+    console.log(data.username);
     console.log(data.password);
+    console.log(data.id);
     console.log("***********************");
 
-    if ($clientPassword.val().trim() === data) {
+    $("#clientModal")
+      .modal("hide")
+      .then(function() {
+        HTTP.serveClientPage(data.id);
+      });
+
+    if ($clientPassword.val().trim() === data.password) {
       console.log("Password matches");
       // Hide the CLIENT login modal
-      $("#clientModal").modal("hide");
     }
   });
 };

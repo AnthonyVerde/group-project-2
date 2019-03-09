@@ -8,35 +8,40 @@ module.exports = function(app) {
     });
   });
 
-  // Returns the
-  app.get("/client/:username", function(req, res) {
+  // Returns the client page based on clientID
+  app.get("/client/:id", function(req, res) {
+    console.log("HTML route: req.params.id = " + req.params.id);
+    console.log(req.params);
+    console.log("= HTML CALL ======================");
     db.client
       .findOne({
         where: {
-          username: req.params.username
+          id: req.params.id
         }
       })
       .then(function(dbClient) {
-        // console.log("===============================");
-        // console.log("Username: " + dbClient.username);
-        // console.log("Password: " + dbClient.password);
-        // console.log("ID: " + dbClient.id);
         res.render("client", {
           client: dbClient
         });
       });
   });
 
-  // // Load client page
-  // app.get("/client", function(req, res) {
-  //   res.render("client", {
-
-  //   });
-  // });
-
-  // Load owner page
-  app.get("/owner", function(req, res) {
-    res.render("owner", {});
+  // Returns the owner page based on ownerID
+  app.get("/owner/:id", function(req, res) {
+    console.log("HTML route: req.params.id = " + req.params.id);
+    console.log(req.params);
+    console.log("= HTML CALL ======================");
+    db.owner
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbOwner) {
+        res.render("owner", {
+          client: dbOwner
+        });
+      });
   });
 
   // Load admin page
@@ -44,7 +49,7 @@ module.exports = function(app) {
     res.render("admin", {});
   });
 
-  // Load admin page
+  // Load search reult page
   app.get("/search", function(req, res) {
     res.render("search", {});
   });

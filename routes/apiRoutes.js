@@ -2,7 +2,7 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Owner login
-  app.get("api/client/:username", function(req, res) {
+  app.get("/api/client/:username", function(req, res) {
     db.client
       .findOne({
         where: {
@@ -10,11 +10,11 @@ module.exports = function(app) {
         }
       })
       .then(function(dbClient) {
-        console.log("===============================");
-        // console.log("Username: " + dbClient.username);
-        // console.log("Password: " + dbClient.password);
-        // console.log("ID: " + dbClient.id);
-        // res.json(dbClient);
+        console.log("= API CALL =======================");
+        console.log("Username: " + dbClient.username);
+        console.log("Password: " + dbClient.password);
+        console.log("ID: " + dbClient.id);
+        res.json(dbClient);
       });
   });
 
