@@ -21,9 +21,9 @@
     </div>
     <hr>
     <div class="alert alert-success" role="alert">
-        Here are your properties
+        Here are your {{properties.count}} properties
     </div>
-    {{#each properties}}
+    {{#each properties.rows}}
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <div class="card">

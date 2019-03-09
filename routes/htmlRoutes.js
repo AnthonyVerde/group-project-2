@@ -47,7 +47,7 @@ module.exports = function(app) {
           "Fownd owner: " + ownerInfo.username + " with Id:" + ownerInfo.id
         );
         db.property
-          .findAll({
+          .findAndCountAll({
             where: {
               ownerId: ownerInfo.id
             }
@@ -55,7 +55,9 @@ module.exports = function(app) {
           .then(function(dbProperties) {
             ownerProperties = dbProperties;
             console.log(
-              "Found  properties for ownerId:" +
+              "Found " +
+                ownerProperties.count +
+                " properties for ownerId:" +
                 ownerInfo.id
             );
             res.render("owner", {
