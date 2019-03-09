@@ -42,6 +42,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     ammenitiesnearby: {
       type: DataTypes.STRING
+    },
+    photo: {
+      type: DataTypes.TEXT
     }
   });
 

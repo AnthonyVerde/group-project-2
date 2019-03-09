@@ -6,6 +6,7 @@ module.exports = function(app) {
   // Get all examples
   createdb();
 // test();
+
   app.get("/api/examples", function(req, res) {
     db.Example.findAll({}).then(function(dbExamples) {
       res.json(dbExamples);
@@ -44,7 +45,7 @@ var test = function(){
     LatitudeMax: location.latitude + 0.035,
     PriceMin: 100000,
     PriceMax: 1000000,
-    RecordsPerPage: 50
+    RecordsPerPage: 2
   };
   realtor.post(opts)
       .then((data) => {
@@ -54,6 +55,8 @@ var test = function(){
         }
       })
 }
+
+var j = 0;
 var createdb = function() {
   console.log("Im getting here")
   var locations = [
@@ -95,6 +98,8 @@ var createdb = function() {
     }
   ]
 
+
+
   for (j in locations) {
     let opts = {
       LongitudeMin: locations[j].longitude - 0.035,
@@ -103,14 +108,15 @@ var createdb = function() {
       LatitudeMax: locations[j].latitude + 0.035,
       PriceMin: 100000,
       PriceMax: 1000000,
-      RecordsPerPage: 50
+      RecordsPerPage: 3
     };
     realtor.post(opts)
       .then((data) => {
 
         //json response
         for (i in data.Results) {
-          console.log("i: "+i + ": "+ data.Results[i].Property.Address.AddressText)
+          console.log(data.Results[i].Property.Photo)
+          
           // console.log(data.Results[i].Property.Address.AddressText);
           var property = {
             // ownerid:
@@ -125,7 +131,9 @@ var createdb = function() {
             bathrooms: data.Results[i].Building.BathroomTotal,
             ownershiptype: data.Results[i].Property.OwnershipType,
             ammenities: data.Results[i].Building.Ammenities,
-            ammenitiesnearby: data.Results[i].Property.AmmenitiesNearBy
+            ammenitiesnearby: data.Results[i].Property.AmmenitiesNearBy,
+            ownerId: (Math.floor(Math.random() * 10) + 1),
+            photo: data.Results[i].Property.Photo[0].HighResPath
           };
           var owner = {
             firstName: faker.name.firstName(),
@@ -142,6 +150,7 @@ var createdb = function() {
           // console.log(property);
           db.owner.create(owner).then(function (newowner) {
             property.ownerId = newowner.id;
+            // db.property.create(property).then(function (newproperty) {}) ;
             
           })
           db.property.create(property).then(function (newproperty) {}) ;
@@ -157,14 +166,3 @@ var createdb = function() {
   // .catch(err) => {
 
   // };
-
-  // fs.appendFile("seeds.sql", "INSERT INTO properties (description, address, postalcode, type, price, bedrooms, bathrooms, ownershiptype, amenities, photo, amenitiesnearby) VALUES ("Samsung 4K UHD TV", "TV", 799.99, 25);", function(err) {
-
-
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-
-  //   // console.log("\nYour log was updated!\n");
-
-  // });
