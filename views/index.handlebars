@@ -1,24 +1,78 @@
 <section class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <img src="/images/propertyPal03.png" alt="" width="250" class="mb-5 mt-5">
-
-            <h2>Landing page</h2>
-
-            <form class="form-inline mt-2 mt-md-0 mt-5">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <div class="row justify-content-lg-center">
+        <div class="col-md-6">
+            <img src="/images/propertyPal03_trans.png" alt="" width="250" class="mb-5 mt-5">
+        </div>
+    </div>
+    <div class="row justify-content-lg-center">
+        <div class="col-10">
+            <form>
+                <div class="form-row">
+                    <div class="col-7">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search properties by city"
+                            aria-label="Search">
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    </div>
+                </div>
             </form>
+        </div>
+    </div>
+    <hr>
+    {{!-- <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-primary" id="addUser">Add User</button>
+            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
+            <a href="/admin"><button type="button" class="btn btn-dark">Administrator</button></a>
+        </div>
+    </div>
+    <hr> --}}
+</section>
+
+
+<section id="modalUser" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            {{> modal/modal-client}}
+
+            {{!-- 
+            <div class="modal-header">
+                <h2 class="modal-title">USER LOGIN or REGISTER</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="errorText">
+                HELLO WORLD
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lg" data-dismiss="modal">CLOSE</button>
+            </div>
+             --}}
+        </div>
+    </div>
+</section>
+
+
+<div id="clientModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            {{> modal/modal-client}}
 
         </div>
     </div>
-    <hr>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <a href="/client"><button type="button" class="btn btn-primary">User</button></a>
-            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
-            <a href="/admin"><button type="button" class="btn btn-secondary">Administrator</button></a>
+</div>
+
+<div id="ownerModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            {{> modal/modal-owner}}
+
         </div>
     </div>
-    <hr>
-</section>
+</div>
+

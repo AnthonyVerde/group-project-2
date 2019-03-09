@@ -1,0 +1,11 @@
+<li>
+	<h4>{{id}}: {{burger_name}}
+		<br>
+		{{#if devoured}}
+		<button type="button" class="btn btn-success btn-sm change-status" data-id="{{id}}" data-eaten="{{devoured}}">
+			DEVOUR BURGER</button></h4>
+	{{else}}
+	<button type="button" class="btn btn-warning btn-sm change-status" data-id="{{id}}"
+		data-eaten="{{devoured}}">REGURGITATE</button></h4>
+	{{/if}}
+</li>
