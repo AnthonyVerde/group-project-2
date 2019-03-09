@@ -3,11 +3,24 @@
         <div class="col-md-auto">
             <hr>
             <h1>CLIENT's PAGE</h1>
-            <h2>Welcome back {{client.firstName}} {{client.lastName}}!</h2>
+            <h2>Welcome back {{client.firstName}}!</h2>
             <p> Here you can to see/edit your information as well as manage favorites.</p>
         </div>
     </div>
     <hr>
+
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Account info</h5>
+            <p class="card-text">First name: <b>{{client.firstName}}</b></p>
+            <p class="card-text">Last name: <b>{{client.lastName}}</b></p>
+            <p class="card-text">Email: <b>{{client.email}}</b></p>
+            <p class="card-text">Phone: <b>{{client.phone}}</b></p>
+            <p class="card-text">Address: <b>{{client.address1}} {{client.address2}}, {{client.city}}, {{client.province}}, {{client.country}}</b></p>
+        </div>
+    </div>
+    <hr>
+
     <div class="alert alert-primary" role="alert">
         Here are your favourites!
     </div>

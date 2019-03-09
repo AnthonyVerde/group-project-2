@@ -1,18 +1,15 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Load index page
+  // Load landing page page
   app.get("/", function(req, res) {
     db.Example.findAll({}).then(function() {
-      res.render("index", {});
+      res.render("index");
     });
   });
 
-  // Returns the client page based on clientID
+  // Load the client page based on clientID
   app.get("/client/:id", function(req, res) {
-    console.log("HTML route: req.params.id = " + req.params.id);
-    console.log(req.params);
-    console.log("= HTML CALL ======================");
     db.client
       .findOne({
         where: {
@@ -20,17 +17,23 @@ module.exports = function(app) {
         }
       })
       .then(function(dbClient) {
+        console.log(
+          "Serving page for client: " +
+            dbClient.username +
+            " with Id:" +
+            dbClient.id
+        );
         res.render("client", {
           client: dbClient
         });
       });
   });
 
-  // Returns the owner page based on ownerID
+  // Load the owner page based on ownerID
   app.get("/owner/:id", function(req, res) {
-    console.log("HTML route: req.params.id = " + req.params.id);
-    console.log(req.params);
-    console.log("= HTML CALL ======================");
+    var ownerInfo, ownerProperties;
+
+    // First find the info of the owner
     db.owner
       .findOne({
         where: {
@@ -38,9 +41,28 @@ module.exports = function(app) {
         }
       })
       .then(function(dbOwner) {
-        res.render("owner", {
-          client: dbOwner
-        });
+        // Then find all properties related to this owner
+        ownerInfo = dbOwner;
+        console.log(
+          "Fownd owner: " + ownerInfo.username + " with Id:" + ownerInfo.id
+        );
+        db.property
+          .findAll({
+            where: {
+              ownerId: ownerInfo.id
+            }
+          })
+          .then(function(dbProperties) {
+            ownerProperties = dbProperties;
+            console.log(
+              "Found  properties for ownerId:" +
+                ownerInfo.id
+            );
+            res.render("owner", {
+              client: ownerInfo,
+              properties: ownerProperties
+            });
+          });
       });
   });
 
