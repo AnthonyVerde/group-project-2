@@ -1,0 +1,62 @@
+<section class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <hr>
+            <h1>EDIT PROPERTY - ID {{property.id}}</h1>
+            <p>Use this page to edit a property</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row justify-content-md-center">
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                {{!-- <h5 class="card-title">Editing property ID:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propertyInfo">
+                    {{property.id}}</h5> --}}
+                <h5 class="card-title inline" id="idtag" data-tag="{{property.id}}">ID: {{property.id}}</h5>
+                <p class="card-text">Address1:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputAddress1"
+                        value="{{property.address1}}"></p>
+                <p class="card-text">Address2:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputAddress2"
+                        value="{{property.address2}}"></p>
+                <p class="card-text">Postal Code:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputPostalCode"
+                        value="{{property.postalcode}}"></p>
+                <p class="card-text">Property type:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputProperType"
+                        value="{{property.propertype}}"></p>
+                <p class="card-text">Price:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputPriceString"
+                        value="{{property.price_string}}"></p>
+                <p class="card-text">Price discount:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputPriceDec"
+                        value="{{property.price_dec}}"></p>
+                <p class="card-text">Number of bedrooms:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputBedrooms"
+                        value="{{property.bedrooms}}"></p>
+                <p class="card-text">Number of bathrooms:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputBathrooms"
+                        value="{{property.bathrooms}}"></p>
+                <p class="card-text">Ownership type:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputOwnershipType"
+                        value="{{property.ownershiptype}}"></p>
+                <p class="card-text">Ammenities on property:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputAmmenities"
+                        value="{{property.ammenities}}"></p>
+                <p class="card-text">Ammenities nearby:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propInputAmmenitiesNearby"
+                        value="{{property.ammenitiesnearby}}"></p>
+            </div>
+            <hr>
+        </div>
+        <button class="btn btn-success my-2 my-sm-0" type="button" id="updateProperty">UPDATE</button>
+        {{!-- <a href="/property/edit/{{property.id}}"><button type="button" class="btn btn-danger"
+                id="updateProperty">UPDATE</button></a> --}}
+        <a href="/property/{{property.id}}"><button type="button" class="btn btn-danger">CANCEL</button></a>
+    </div>
+    <hr>
+
+
+</section>

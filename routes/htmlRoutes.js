@@ -68,6 +68,71 @@ module.exports = function(app) {
       });
   });
 
+  // Load the info page of a property based on propertyID
+  app.get("/property/:id", function(req, res) {
+    db.property
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbProperty) {
+        console.log("Serving INFO page for property with Id:" + dbProperty.id);
+        res.render("property", {
+          property: dbProperty
+        });
+      });
+  });
+
+  // Load the EDIT page of a property based on propertyID
+  app.get("/property/edit/:id", function(req, res) {
+    db.property
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbProperty) {
+        console.log("Serving EDIT page for property with Id:" + dbProperty.id);
+        res.render("propertyedit", {
+          property: dbProperty
+        });
+      });
+  });
+
+  // Load the EDIT page of a property based on propertyID
+  app.put("/property/edit/:id", function(req, res) {
+    db.property
+      .update(
+        {
+          address1: req.body.address1,
+          address2: req.body.address2,
+          postalcode: req.body.postalcode,
+          propertytype: req.body.propertytype,
+          price_string: req.body.price_string,
+          price_dec: req.body.price_dec,
+          bedrooms: req.body.bedrooms,
+          bathrooms: req.body.bathrooms,
+          ownershiptype: req.body.ownershiptype,
+          ammenities: req.body.ammenities,
+          ammenitiesnearby: req.body.ammenitiesnearby,
+        },
+        {
+          where: {
+            id: req.body.id
+          }
+        }
+      )
+      .then(function(dbProperty) {
+        console.log("Serving EDIT page for property with Id:" + dbProperty.id);
+        res.render("propertyedit", {
+          property: dbProperty
+        });
+      });
+  });
+
+  
+
   // Load admin page
   app.get("/admin", function(req, res) {
     res.render("admin", {});

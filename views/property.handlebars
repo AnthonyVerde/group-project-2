@@ -1,0 +1,36 @@
+<section class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <hr>
+            <h1>PROPERTY INFO - ID {{property.id}}</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row justify-content-md-center">
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                {{!-- <h5 class="card-title">Editing property ID:
+                    <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propertyInfo">
+                    {{property.id}}</h5> --}}
+                <h5 class="card-title inline">ID: {{property.id}}</h5>
+                <p class="card-text">Address1: {{property.address1}}</p>
+                <p class="card-text">Address2: {{property.address2}}</p>
+                <p class="card-text">Postal Code:{{property.postalcode}}</p>
+                <p class="card-text">Property type: {{property.propertytype}}</p>
+                <p class="card-text">Price: {{property.price_string}}</p>
+                <p class="card-text">Price discount: {{property.price_dec}}</p>
+                <p class="card-text">Number of bedrooms: {{property.bedrooms}}</p>
+                <p class="card-text">Number of bathrooms: {{property.bathrooms}}</p>
+                <p class="card-text">Ownership type: {{property.ownershiptype}}</p>
+                <p class="card-text">Ammenities on property: {{property.ammenities}}</p>
+                <p class="card-text">Ammenities newr by: {{property.ammenitiesnearby}}</p>
+            </div>
+            <hr>
+        </div>
+        <a href="/property/edit/{{property.id}}"><button type="button" class="btn btn-success">UPDATE PROPERTY REF#{{property.id}}</button></a>
+    </div>
+    <hr>
+
+
+</section>

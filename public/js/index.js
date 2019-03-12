@@ -2,6 +2,9 @@
 var $clientLogin = $("#btnClientLogin");
 var $clientUsername = $("#clientUsername");
 var $clientPassword = $("#clientPassword");
+var $updateProperty = $("#updateProperty");
+
+
 
 ///// DEMO CODE ... CAN BE DELETED /////
 
@@ -17,7 +20,7 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  getClients: function(client) {
+  getClients: function (client) {
     console.log("Username: " + client.username);
     console.log("Password: " + client.password);
     console.log("URL: api/client/" + client.username);
@@ -25,14 +28,26 @@ var API = {
     return $.ajax({
       url: "api/client/" + client.username,
       type: "GET"
-    }).then(function(data) {
+    }).then(function (data) {
       return data;
+    });
+  },
+
+  updateProperty: function(editedInfo, currentId) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../api/property/" + currentId,
+      data: JSON.stringify(editedInfo)
+      // data: editedInfo
     });
   },
 
   ///// DEMO CODE ... CAN BE DELETED /////
 
-  saveExample: function(example) {
+  saveExample: function (example) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
@@ -42,13 +57,13 @@ var API = {
       data: JSON.stringify(example)
     });
   },
-  getExamples: function() {
+  getExamples: function () {
     return $.ajax({
       url: "api/examples",
       type: "GET"
     });
   },
-  deleteExample: function(id) {
+  deleteExample: function (id) {
     return $.ajax({
       url: "api/examples/" + id,
       type: "DELETE"
@@ -61,9 +76,9 @@ var API = {
 ///// DEMO CODE ... CAN BE DELETED /////
 
 // refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
+var refreshExamples = function () {
+  API.getExamples().then(function (data) {
+    var $examples = data.map(function (example) {
       var $a = $("<a>")
         .text(example.text)
         .attr("href", "/example/" + example.id);
@@ -91,7 +106,7 @@ var refreshExamples = function() {
 
 // handleFormSubmit is called whenever we submit a new example
 // Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
+var handleFormSubmit = function (event) {
   event.preventDefault();
 
   var example = {
@@ -104,7 +119,7 @@ var handleFormSubmit = function(event) {
     return;
   }
 
-  API.saveExample(example).then(function() {
+  API.saveExample(example).then(function () {
     refreshExamples();
   });
 
@@ -114,19 +129,55 @@ var handleFormSubmit = function(event) {
 
 // handleDeleteBtnClick is called when an example's delete button is clicked
 // Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
+var handleDeleteBtnClick = function () {
   var idToDelete = $(this)
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function() {
+  API.deleteExample(idToDelete).then(function () {
     refreshExamples();
   });
 };
 
 ///// END OF DEMO CODE /////
+
+// Click to EDIT a property
+
+// $updateProperty.on("click", function () {
+//   console.log("XXXXXXXXXXXXXX    UPDATE NOT REQUESTED    XXXXXXXXXXXXXX");
+// });
+
+var handleUpdateProperty = function(event) {
+  event.preventDefault();
+
+  console.log("XXXXXXXXXXXXXX    UPDATE REQUESTED    XXXXXXXXXXXXXX");
+
+  var editedInfo = {
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPriceString").val().trim(),
+    price_dec: $("#propInputPriceDec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+  };
+
+  var currentId = $("#idtag").data("tag");
+
+  API.updateProperty(editedInfo, currentId).then(function() {
+    console.log("XXXXXXXXXXXXXX    UPDATED    XXXXXXXXXXXXXX");
+  });
+};
+
+$updateProperty.on("click", handleUpdateProperty);
+
+
 var HTTP = {
-  serveClientPage: function(clientID) {
+  serveClientPage: function (clientID) {
     return $.ajax({
       url: "/client/" + clientID,
       type: "GET"
@@ -134,7 +185,7 @@ var HTTP = {
   }
 };
 
-var handleBtnClientLogin = function() {
+var handleBtnClientLogin = function () {
   event.preventDefault();
 
   var client = {
@@ -142,7 +193,7 @@ var handleBtnClientLogin = function() {
     password: $clientPassword.val().trim()
   };
 
-  API.getClients(client).then(function(data) {
+  API.getClients(client).then(function (data) {
     console.log("***********************\nReturn from API.getClients");
     console.log(data.username);
     console.log(data.password);
@@ -151,7 +202,7 @@ var handleBtnClientLogin = function() {
 
     $("#clientModal")
       .modal("hide")
-      .then(function() {
+      .then(function () {
         HTTP.serveClientPage(data.id);
       });
 
@@ -168,7 +219,7 @@ $clientLogin.on("click", handleBtnClientLogin);
 // MODAL logic
 
 // USER log in
-$("#clientLogIn").on("click", function() {
+$("#clientLogIn").on("click", function () {
   console.log("Open USER modal");
 
   // Display CLIENT login modal
@@ -179,7 +230,7 @@ $("#clientLogIn").on("click", function() {
 });
 
 // OWNER log in
-$("#ownerLogIn").on("click", function() {
+$("#ownerLogIn").on("click", function () {
   console.log("Open OWNER modal");
 
   // Display OWNER login modal
@@ -189,7 +240,7 @@ $("#ownerLogIn").on("click", function() {
   });
 });
 
-$("#btnLogin").click(function(event) {
+$("#btnLogin").click(function (event) {
   //Fetch form to apply custom Bootstrap validation
   var form = $("#formLogin");
 
