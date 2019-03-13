@@ -2,21 +2,10 @@
 var $clientLogin = $("#btnClientLogin");
 var $clientUsername = $("#clientUsername");
 var $clientPassword = $("#clientPassword");
+
 var $updateProperty = $("#updateProperty");
-
-
-
-///// DEMO CODE ... CAN BE DELETED /////
-
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
-
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
-
-///// END OF DEMO CODE /////
+var $addProperty = $("#addProperty");
+var $deleteProperty = $("#deleteProperty");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -33,6 +22,19 @@ var API = {
     });
   },
 
+  // Pushes the information of a NEW property
+  newProperty: function(newPropertyInfo) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../api/property",
+      data: JSON.stringify(newPropertyInfo)
+    });
+  },
+
+  // Updates a property in the database
   updateProperty: function(editedInfo, currentId) {
     return $.ajax({
       headers: {
@@ -41,7 +43,6 @@ var API = {
       type: "POST",
       url: "../../api/property/" + currentId,
       data: JSON.stringify(editedInfo)
-      // data: editedInfo
     });
   },
 
@@ -153,27 +154,57 @@ var handleUpdateProperty = function(event) {
   console.log("XXXXXXXXXXXXXX    UPDATE REQUESTED    XXXXXXXXXXXXXX");
 
   var editedInfo = {
+    info: $("#propInputInfo").val().trim(),
     address1: $("#propInputAddress1").val().trim(),
     address2: $("#propInputAddress2").val().trim(),
     postalcode: $("#propInputPostalCode").val().trim(),
     propertype: $("#propInputProperType").val().trim(),
-    price_string: $("#propInputPriceString").val().trim(),
-    price_dec: $("#propInputPriceDec").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
     bedrooms: $("#propInputBedrooms").val().trim(),
     bathrooms: $("#propInputBathrooms").val().trim(),
     ownershiptype: $("#propInputOwnershipType").val().trim(),
     ammenities: $("#propInputAmmenities").val().trim(),
     ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
   };
 
   var currentId = $("#idtag").data("tag");
 
   API.updateProperty(editedInfo, currentId).then(function() {
+
     console.log("XXXXXXXXXXXXXX    UPDATED    XXXXXXXXXXXXXX");
   });
 };
 
+var handleAddProperty = function(event) {
+  event.preventDefault();
+
+  console.log("XXXXXXXXXXXXXX    ADD NEW PROPERTY    XXXXXXXXXXXXXX");
+
+  var newPropertyInfo = {
+    info: $("#propInputInfo").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
+  };
+
+  API.newProperty(newPropertyInfo).then(function() {
+    console.log("XXXXXXXXXXXXXX    ADDED    XXXXXXXXXXXXXX");
+  });
+};
+
 $updateProperty.on("click", handleUpdateProperty);
+$addProperty.on("click", handleAddProperty);
 
 
 var HTTP = {

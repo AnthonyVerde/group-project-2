@@ -14,17 +14,21 @@
                     <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propertyInfo">
                     {{property.id}}</h5> --}}
                 <h5 class="card-title inline">ID: {{property.id}}</h5>
-                <p class="card-text">Address1: {{property.address1}}</p>
-                <p class="card-text">Address2: {{property.address2}}</p>
-                <p class="card-text">Postal Code:{{property.postalcode}}</p>
-                <p class="card-text">Property type: {{property.propertytype}}</p>
-                <p class="card-text">Price: {{property.price_string}}</p>
-                <p class="card-text">Price discount: {{property.price_dec}}</p>
-                <p class="card-text">Number of bedrooms: {{property.bedrooms}}</p>
-                <p class="card-text">Number of bathrooms: {{property.bathrooms}}</p>
-                <p class="card-text">Ownership type: {{property.ownershiptype}}</p>
-                <p class="card-text">Ammenities on property: {{property.ammenities}}</p>
-                <p class="card-text">Ammenities newr by: {{property.ammenitiesnearby}}</p>
+                <p class="card-text"><b>info:</b> {{property.info}}</p>
+                <p class="card-text"><b>address1:</b> {{property.address1}}</p>
+                <p class="card-text"><b>address2:</b> {{property.address2}}</p>
+                <p class="card-text"><b>postalcode:</b> {{property.postalcode}}</p>
+                <p class="card-text"><b>propertype:</b> {{property.propertype}}</p>
+                <p class="card-text"><b>price_string:</b> {{property.price_string}}</p>
+                <p class="card-text"><b>price_dec:</b> {{property.price_dec}}</p>
+                <p class="card-text"><b>bedrooms:</b> {{property.bedrooms}}</p>
+                <p class="card-text"><b>bathrooms:</b> {{property.bathrooms}}</p>
+                <p class="card-text"><b>ownershiptype:</b> {{property.ownershiptype}}</p>
+                <p class="card-text"><b>ammenities:</b> {{property.ammenities}}</p>
+                <p class="card-text"><b>ammenitiesnearby:</b> {{property.ammenitiesnearby}}</p>
+                <p class="card-text"><b>photo:</b> <img src="{{property.photo}}" style="width: 200px" alt="Property photo"> </p>
+                <p class="card-text"><small>createdAt: {{property.createdAt}}</small>
+                <p class="card-text"><small>updatedAt: {{property.updatedAt}}</small>
             </div>
             <hr>
         </div>

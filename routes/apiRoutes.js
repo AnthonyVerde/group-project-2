@@ -18,14 +18,39 @@ module.exports = function (app) {
       });
   });
 
-  // PUT route for updating a property. We can get the updated todo data from req.body
+  // Adding a new property
+  app.post("/api/property", function(req, res) {
+    // Update takes in an object describing the properties we want to update, and
+    // we use where to describe which objects we want to update
+    db.property
+      .create({
+        info: req.body.info,
+        address1: req.body.address1,
+        address2: req.body.address2,
+        postalcode: req.body.postalcode,
+        propertype: req.body.propertype,
+        price_string: req.body.price_string,
+        price_dec: req.body.price_dec,
+        bedrooms: req.body.bedrooms,
+        bathrooms: req.body.bathrooms,
+        ownershiptype: req.body.ownershiptype,
+        ammenities: req.body.ammenities,
+        ammenitiesnearby: req.body.ammenitiesnearby,
+        photo: req.body.photo
+      })
+      .then(function(dbProperty) {
+        res.json(dbProperty);
+      });
+  });
+
+  // PUT route for updating a property. We can get the updated PROPERTY data from req.body
   app.post("/api/property/:id", function(req, res) {
-    console.log("EEEEEEEEEEEEEEEEEEEEE     " + req.params.id + "     EEEEEEEEEEEEEEEEEEEEE");
     // Update takes in an object describing the properties we want to update, and
     // we use where to describe which objects we want to update
     db.property
       .update(
         {
+          info: req.body.info,
           address1: req.body.address1,
           address2: req.body.address2,
           postalcode: req.body.postalcode,
@@ -37,6 +62,7 @@ module.exports = function (app) {
           ownershiptype: req.body.ownershiptype,
           ammenities: req.body.ammenities,
           ammenitiesnearby: req.body.ammenitiesnearby,
+          photo: req.body.photo
         },
         {
           where: {
