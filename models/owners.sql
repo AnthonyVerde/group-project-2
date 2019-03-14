@@ -1,0 +1,13 @@
+/*
+-- Query: SELECT * FROM propertydb2.owners
+LIMIT 0, 50000
+
+-- Date: 2019-03-14 19:25
+*/
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (1,'ArmandoConn','owner','Armando','Conn','Constantin40@yahoo.com','(898) 329-7746 x14261','Suite 865','688 Armstrong Roads','Calgary','Alberta','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (2,'JaleelTreutel','owner','Jaleel','Treutel','Lola46@hotmail.com','(063) 826-9971','Apt. 604','2889 Elisha Curve','Calgary','Alberta','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (3,'HannaBode','owner','Hanna','Bode','Jaiden72@hotmail.com','(651) 481-2487 x2666','Apt. 332','99373 Nathanael Estates','London','Ontario','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (4,'QuintenHane','owner','Quinten','Hane','Flavie_Koss@gmail.com','818.010.5432 x30285','Apt. 978','99338 Bayer Unions','Toronto','Ontario','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (6,'CliffordPowlowski','owner','Clifford','Powlowski','Zakary92@hotmail.com','(407) 191-0652 x48169','Suite 365','53720 Davis Center','London','Ontario','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (7,'JanickAltenwerth','owner','Janick','Altenwerth','Aida.Carter9@hotmail.com','(431) 269-3671','Apt. 933','2097 Rice Keys','London','Ontario','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
+INSERT INTO `` (`id`,`username`,`password`,`firstName`,`lastName`,`email`,`phone`,`address1`,`address2`,`city`,`province`,`country`,`createdAt`,`updatedAt`) VALUES (8,'DahliaKessler','owner','Dahlia','Kessler','Guy_Barrows@hotmail.com','(533) 468-0570 x56496','Apt. 417','7867 Abernathy Meadows','Mississauga','Ontario','Canada','2019-03-14 18:54:58','2019-03-14 18:54:58');
