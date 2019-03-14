@@ -1,22 +1,75 @@
 var db = require("../models");
 
-module.exports = function (app) {
-  // Owner login
-  app.get("/api/client/:username", function (req, res) {
+module.exports = function(app) {
+  /////////// Routes for CLIENTS ///////////
+
+  // Client login
+  app.get("/api/client/:id", function(req, res) {
     db.client
       .findOne({
         where: {
-          username: req.params.username
+          username: req.params.id
         }
       })
-      .then(function (dbClient) {
-        console.log("= API CALL =======================");
-        console.log("Username: " + dbClient.username);
-        console.log("Password: " + dbClient.password);
-        console.log("ID: " + dbClient.id);
+      .then(function(dbClient) {
+        // console.log("= API CALL =======================");
+        // console.log("Username: " + dbClient.username);
+        // console.log("Password: " + dbClient.password);
+        // console.log("ID: " + dbClient.id);
         res.json(dbClient);
       });
   });
+
+  /////////// Routes for OWNERS ///////////
+
+  // Owner login
+  app.get("/api/owner/:id", function(req, res) {
+    db.owner
+      .findOne({
+        where: {
+          username: req.params.id
+        }
+      })
+      .then(function(dbOwner) {
+        // console.log("= API CALL =======================");
+        // console.log("Username: " + dbClient.username);
+        // console.log("Password: " + dbClient.password);
+        // console.log("ID: " + dbClient.id);
+        res.json(dbOwner);
+      });
+  });
+
+  // Updating existing owner based on ownerId
+  app.post("/api/owner/:id", function(req, res) {
+    var ownerId = req.body.ownerId;
+
+    db.owner
+      .update(
+        {
+          username: req.body.username,
+          password: req.body.password,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          phone: req.body.phone,
+          address1: req.body.address1,
+          address2: req.body.address2,
+          city: req.body.city,
+          province: req.body.province,
+          country: req.body.country
+        },
+        {
+          where: {
+            id: ownerId
+          }
+        }
+      )
+      .then(function() {
+        res.json(ownerId);
+      });
+  });
+
+  /////////// Routes for PROPERTIES ///////////
 
   // Adding a new property
   app.post("/api/property", function(req, res) {
@@ -44,7 +97,7 @@ module.exports = function (app) {
       });
   });
 
-  // PUT route for updating a property. We can get the updated PROPERTY data from req.body
+  // Updating existing property based on propertyId
   app.post("/api/property/:id", function(req, res) {
     var ownerId = req.body.ownerId;
 
@@ -76,7 +129,7 @@ module.exports = function (app) {
       });
   });
 
-  // Delete an example by id
+  // Delete existing property based on propertyId
   app.delete("/api/property/:id", function(req, res) {
     db.property
       .destroy({
@@ -88,33 +141,4 @@ module.exports = function (app) {
         res.json(data);
       });
   });
-
-  ///// DEMO CODE ... CAN BE DELETED /////
-
-  // Get all examples
-  app.get("/api/examples", function (req, res) {
-    db.Example.findAll({}).then(function (dbExamples) {
-      res.json(dbExamples);
-    });
-  });
-
-  // Create a new example
-  app.post("/api/examples", function (req, res) {
-    db.Example.create(req.body).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function (req, res) {
-    db.Example.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function (dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  ///// END OF DEMO CODE /////
 };
