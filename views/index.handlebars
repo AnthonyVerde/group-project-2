@@ -1,24 +1,44 @@
 <section class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <img src="/images/propertyPal03.png" alt="" width="250" class="mb-5 mt-5">
-
-            <h2>Landing page</h2>
-
-            <form class="form-inline mt-2 mt-md-0 mt-5">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-
+    <div class="row justify-content-lg-center">
+        <div class="col-md-6">
+            <img src="/images/propertyPal03_trans.png" alt="" width="250" class="mb-5 mt-5">
         </div>
     </div>
-    <hr>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <a href="/client"><button type="button" class="btn btn-primary">User</button></a>
-            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
-            <a href="/admin"><button type="button" class="btn btn-secondary">Administrator</button></a>
+    <div class="row justify-content-lg-center">
+        <div class="col-10">
+            <form>
+                <div class="form-row">
+                    <div class="col-7">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search properties by city"
+                            aria-label="Search">
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <hr>
 </section>
+
+<div id="clientModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            {{> modal/modal-client}}
+
+        </div>
+    </div>
+</div>
+
+<div id="ownerModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            {{> modal/modal-owner}}
+
+        </div>
+    </div>
+</div>
+

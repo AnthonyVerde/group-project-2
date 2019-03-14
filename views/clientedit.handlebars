@@ -1,0 +1,28 @@
+<section class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <hr>
+            <h1>CLIENT's PAGE</h1>
+            <h2>Welcome back {{client.firstName}} {{client.lastName}}!</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+            <h5 class="card-title">Edi account info</h5>
+            <p class="card-text">username: <input class="form-control mr-sm-2" type="text" id="propInputUsername" value="{{client.username}}"></p>
+            <p class="card-text">password: <input class="form-control mr-sm-2" type="text" id="propInputPassword" value="{{client.password}}"></p>
+            <p class="card-text">firstName: <input class="form-control mr-sm-2" type="text" id="propInputfirstName" value="{{client.firstName}}"></p>
+            <p class="card-text">lastName: <input class="form-control mr-sm-2" type="text" id="propInputLastName" value="{{client.lastName}}"></p>
+            <p class="card-text">email: <input class="form-control mr-sm-2" type="text" id="propInputEmail" value="{{client.email}}"></p>
+            <p class="card-text">phone: <input class="form-control mr-sm-2" type="text" id="propInputPhone" value="{{client.phone}}"></p>
+            <small>Client ID: <span id="idtag" data-tag="{{client.id}}">{{client.id}}</span></small>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <button class="btn btn-success my-2 my-sm-0" type="button" id="updateClient">UPDATE</button>
+        <a href="/client/{{client.id}}"><button type="button" class="btn btn-danger">CANCEL</button></a>
+    </div>
+    <hr>
+</section>

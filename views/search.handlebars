@@ -8,30 +8,22 @@
     <div class="alert alert-success" role="alert">
         Here are the results of your request
     </div>
+    {{#each results}}
+    <a href="/property/{{id}}">
     <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 1 *****
-            <a href="#"><button type="button" class="btn btn-warning">MAKE FAVOURITE</button></a>
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title inline">ID: {{this.id}}</h5>
+                <p class="card-text"><b>info:</b> {{info}}</p>
+                <p class="card-text"><b>address1:</b> {{this.address1}}</p>
+                <p class="card-text"><b>address2:</b> {{this.address2}}</p>
+                <p class="card-text"><b>photo:</b> <img src="{{this.photo}}" style="width: 200px"
+                        alt="Property photo"> </p>
+            </div>
+            <hr>
         </div>
     </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 2 *****
-            <a href="#"><button type="button" class="btn btn-warning">MAKE FAVOURITE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 3 *****
-            <a href="#"><button type="button" class="btn btn-warning">MAKE FAVOURITE</button></a>
-        </div>
-    </div>
-    <hr>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <a href="/client"><button type="button" class="btn btn-primary">User</button></a>
-            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
-            <a href="/admin"><button type="button" class="btn btn-secondary">Administrator</button></a>
-        </div>
-    </div>
+    </a>
+    {{/each}}
 </section>

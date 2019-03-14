@@ -1,6 +1,25 @@
 var db = require("../models");
+// var Op = Sequelize.Op;
 
 module.exports = function(app) {
+  /////////// Routes for SEARCH ///////////
+  // app.get("/api/search/:keyword", function(req, res) {
+  //   db.property
+  //     .findAll({
+  //       where: {
+  //         address2: {
+  //           $like: "%" + req.params.keyword + "%"
+  //         }
+  //       }
+  //     })
+  //     .then(function(dbClient) {
+  //       // console.log("= API CALL =======================");
+  //       // console.log("Username: " + dbClient.username);
+  //       // console.log("Password: " + dbClient.password);
+  //       console.log(dbClient);
+  //       res.json(dbClient);
+  //     });
+  // });
   /////////// Routes for CLIENTS ///////////
 
   // Client login
@@ -20,39 +39,14 @@ module.exports = function(app) {
       });
   });
 
-  // Updating existing client based on clientId
-  app.post("/api/client/:id", function(req, res) {
-    var clientId = req.body.clientId;
-
-    db.client
-      .update(
-        {
-          username: req.body.username,
-          password: req.body.password,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          phone: req.body.phone,
-        },
-        {
-          where: {
-            id: clientId
-          }
-        }
-      )
-      .then(function() {
-        res.json(clientId);
-      });
-  });
-
   /////////// Routes for OWNERS ///////////
 
   // Owner login
-  app.get("/api/owner/:username", function(req, res) {
+  app.get("/api/owner/:id", function(req, res) {
     db.owner
       .findOne({
         where: {
-          username: req.params.username
+          username: req.params.id
         }
       })
       .then(function(dbOwner) {
@@ -157,6 +151,19 @@ module.exports = function(app) {
   // Delete existing property based on propertyId
   app.delete("/api/property/:id", function(req, res) {
     db.property
+      .destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(data) {
+        res.json(data);
+      });
+  });
+
+  // Delete existing property based on propertyId
+  app.delete("/api/owner/:id", function(req, res) {
+    db.owner
       .destroy({
         where: {
           id: req.params.id

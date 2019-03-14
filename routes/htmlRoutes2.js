@@ -1,27 +1,27 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Load landing page page when browsing the root URL
-  app.get("/", function(req, res) {
+  app.get("/", function (req, res) {
     res.render("index");
   });
 
   /////////// Routes for CLIENTS ///////////
 
   // Load CLIENT info page based on clientId
-  app.get("/client/:id", function(req, res) {
+  app.get("/client/:id", function (req, res) {
     db.client
       .findOne({
         where: {
           id: req.params.id
         }
       })
-      .then(function(dbClient) {
+      .then(function (dbClient) {
         console.log(
           "Serving page for client: " +
-            dbClient.username +
-            " with Id:" +
-            dbClient.id
+          dbClient.username +
+          " with Id:" +
+          dbClient.id
         );
         res.render("client", {
           client: dbClient
@@ -29,25 +29,10 @@ module.exports = function(app) {
       });
   });
 
-  // Load the EDIT page for an client based on clientId
-  app.get("/client/edit/:id", function(req, res) {
-    db.client
-      .findOne({
-        where: {
-          id: req.params.id
-        }
-      })
-      .then(function(dbclient) {
-        res.render("clientedit", {
-          client: dbclient
-        });
-      });
-  });
-
   /////////// Routes for OWNERS ///////////
 
   // Load OWNER info page based on ownerId
-  app.get("/owner/:id", function(req, res) {
+  app.get("/owner/:id", function (req, res) {
     var ownerInfo, ownerProperties;
 
     // First find the info of the owner
@@ -57,7 +42,7 @@ module.exports = function(app) {
           id: req.params.id
         }
       })
-      .then(function(dbOwner) {
+      .then(function (dbOwner) {
         // Then find all properties related to this owner
         ownerInfo = dbOwner;
         console.log(
@@ -69,13 +54,13 @@ module.exports = function(app) {
               ownerId: ownerInfo.id
             }
           })
-          .then(function(dbProperties) {
+          .then(function (dbProperties) {
             ownerProperties = dbProperties;
             console.log(
               "Found " +
-                ownerProperties.count +
-                " properties for ownerId:" +
-                ownerInfo.id
+              ownerProperties.count +
+              " properties for ownerId:" +
+              ownerInfo.id
             );
             res.render("owner", {
               owner: ownerInfo,
@@ -86,16 +71,46 @@ module.exports = function(app) {
   });
 
   // Load the EDIT page for an owner based on ownerId
-  app.get("/owner/edit/:id", function(req, res) {
+  app.get("/owner/edit/:id", function (req, res) {
     db.owner
       .findOne({
         where: {
           id: req.params.id
         }
       })
-      .then(function(dbOwner) {
+      .then(function (dbOwner) {
         res.render("owneredit", {
           owner: dbOwner
+        });
+      });
+  });
+
+  app.get("/search/:keyword", function (req, res) {
+    db.property
+      .findAll({
+        where: {
+          $or: {
+            address2: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            info: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ammenities: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ownershiptype: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ammenitiesnearby: {
+              $like: "%" + req.params.keyword + "%"
+            }
+          }
+        }
+      })
+      .then(function (dbOwner) {
+        res.render("search", {
+          results: dbOwner
         });
       });
   });
@@ -103,14 +118,14 @@ module.exports = function(app) {
   /////////// Routes for PROPERTIES ///////////
 
   // Load PROPERTY info page based on propertyId
-  app.get("/property/:id", function(req, res) {
+  app.get("/property/:id", function (req, res) {
     db.property
       .findOne({
         where: {
           id: req.params.id
         }
       })
-      .then(function(dbProperty) {
+      .then(function (dbProperty) {
         console.log("Serving INFO page for property with Id:" + dbProperty.id);
         res.render("property", {
           property: dbProperty
@@ -119,14 +134,14 @@ module.exports = function(app) {
   });
 
   // Load the CREATE page for a new property based on ownerId
-  app.get("/property/add/:ownerId", function(req, res) {
+  app.get("/property/add/:ownerId", function (req, res) {
     db.owner
       .findOne({
         where: {
           id: req.params.ownerId
         }
       })
-      .then(function(dbOwner) {
+      .then(function (dbOwner) {
         console.log(
           "Serving page to ADD a new property for owner with Id:" + dbOwner.id
         );
@@ -137,7 +152,7 @@ module.exports = function(app) {
   });
 
   // Load the EDIT page of a property based on propertyId
-  app.get("/property/edit/:id", function(req, res) {
+  app.get("/property/edit/:id", function (req, res) {
     var propertyInfo, ownerInfo;
 
     db.property
@@ -146,7 +161,7 @@ module.exports = function(app) {
           id: req.params.id
         }
       })
-      .then(function(dbProperty) {
+      .then(function (dbProperty) {
         propertyInfo = dbProperty;
         db.owner
           .findOne({
@@ -154,15 +169,15 @@ module.exports = function(app) {
               id: propertyInfo.ownerId
             }
           })
-          .then(function(dbOwner) {
+          .then(function (dbOwner) {
             ownerInfo = dbOwner;
             console.log(
               "Serving EDIT page for " +
-                ownerInfo.firstName +
-                " " +
-                ownerInfo.lastName +
-                "'s property with Id:" +
-                propertyInfo.id
+              ownerInfo.firstName +
+              " " +
+              ownerInfo.lastName +
+              "'s property with Id:" +
+              propertyInfo.id
             );
             res.render("propertyedit", {
               property: propertyInfo,
@@ -175,21 +190,32 @@ module.exports = function(app) {
   /////////// Routes for ADMINISTRATOR ///////////
 
   // Load admin page
-  app.get("/admin", function(req, res) {
-    res.render("admin", {});
+  app.get("/admin", function (req, res) {
+    allOWnerProperties = [];
+    db.owner
+      .findAll({
+        include: [db.property]
+      })
+      .then(function (owners) {
+        // console.log(typeof owners);
+        // console.log(owners[0].properties[0]);
+        res.render("admin", {
+          allOwners: owners
+        });
+      });
   });
 
   /////////// Routes for SEARCH ///////////
 
   // Load search results page
-  app.get("/search", function(req, res) {
+  app.get("/search", function (req, res) {
     res.render("search", {});
   });
 
   /////////// Routes for OTHER ///////////
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.render("404");
   });
 };

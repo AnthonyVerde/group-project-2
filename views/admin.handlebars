@@ -2,6 +2,7 @@
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <h2>Site administrator's page</h2>
+            <h1>There are {{allOwners.length}} owners </h1>
             <p>Here the administrator can manage the users, owners and properties.</p>
         </div>
     </div>
@@ -10,82 +11,29 @@
         Users
     </div>
     <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** User 1 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** User 2 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** User 3 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <hr>
-    <div class="alert alert-success" role="alert">
-        OWNERS
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Owner 1 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Owner 2 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Owner 3 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <hr>
-    <div class="alert alert-success" role="alert">
-        Properties
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 1 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 2 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            ***** Property 3 *****
-            <a href="/owner"><button type="button" class="btn btn-success">EDIT</button></a>
-            <a href="/owner"><button type="button" class="btn btn-danger">DELETE</button></a>
-        </div>
-    </div>
-    <hr>
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <a href="/client"><button type="button" class="btn btn-primary">User</button></a>
-            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
-            <a href="/admin"><button type="button" class="btn btn-secondary">Administrator</button></a>
-        </div>
+        {{#each allOwners}}
+        <li>
+            <div class="row">
+                <div class="col-md-auto">
+                    ***** User {{this.id}} *****
+                    <p>{{this.firstName}} {{this.lastName}}</p>
+                    <a href="/owner/edit/{{this.id}}"><button type="button" class="btn btn-success">EDIT</button></a>
+                    <button type="button" class="btn btn-danger adminDeleteOwner" ownerId={{this.id}}>DELETE</button>
+                    {{#each this.properties}}
+                    <hr>
+                    <img src={{this.photo}} height="75" width="75">
+                    <h2>{{this.price_string}}</h2>
+                    <p>{{this.info}}</p>
+                    <a href="/property/edit/{{this.id}}"><button type="button" class="btn btn-success">EDIT</button></a>
+                    <button type="button" class="btn btn-danger adminDeleteProperty" propId={{this.id}}>DELETE</button>
+                    {{/each}}
+
+                </div>
+            </div>
+        </li>
+        {{/each}}
+
+
     </div>
 </section>
+
