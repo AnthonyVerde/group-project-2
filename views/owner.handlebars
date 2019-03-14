@@ -20,6 +20,10 @@
         </div>
     </div>
     <hr>
+    <div>
+        <a href="/property/add/{{client.id}}"><button type="button" class="btn btn-primary">ADD NEW PROPERTY</button></a>
+    </div>
+    <hr>
     <div class="alert alert-success" role="alert">
         Here are your {{properties.count}} properties
     </div>
@@ -29,14 +33,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><small>#{{id}} </small>{{info}}</h5>
-                    {{!-- <p class="card-text">First name: <b>{{client.firstName}}</b></p>
-                    <p class="card-text">Last name: <b>{{client.lastName}}</b></p>
-                    <p class="card-text">Email: <b>{{client.email}}</b></p>
-                    <p class="card-text">Phone: <b>{{client.phone}}</b></p>
-                    <p class="card-text">Address: <b>{{client.address1}} {{client.address2}}, {{client.city}},
-                            {{client.province}}, {{client.country}}</b></p> --}}
-                    <a href="#"><button type="button" class="btn btn-success">EDIT</button></a>
-                    <a href="#"><button type="button" class="btn btn-danger">DELETE</button></a>
+                    <a href="/property/edit/{{id}}"><button type="button" class="btn btn-success">EDIT</button></a>
+                    {{!-- <a href="/property/delete/{{id}}"><button type="button" class="btn btn-danger">DELETE</button></a> --}}
+                    <button type="button" class="btn btn-danger deleteProperty" data-tag="{{id}}">DELETE</button>
                 </div>
             </div>
         </div>

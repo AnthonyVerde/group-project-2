@@ -2,8 +2,9 @@
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <hr>
-            <h1>EDIT PROPERTY - ID {{property.id}}</h1>
-            <p>Use this page to edit a property</p>
+            <h1>EDIT PROPERTY - ID#<span id="propertyTag" data-tag="{{property.id}}">{{property.id}}</span></h1>
+            <p>This property was posted by {{owner.firstName}} {{owner.lastName}} ( owner ID#<span id="ownerTag" data-tag="{{owner.id}}">{{owner.id}}</span>)</p>
+
         </div>
     </div>
     <hr>
@@ -14,7 +15,7 @@
                 {{!-- <h5 class="card-title">Editing property ID:
                     <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propertyInfo">
                     {{property.id}}</h5> --}}
-                <h5 class="card-title inline" id="idtag" data-tag="{{property.id}}">ID: {{property.id}}</h5>
+                <h5 class="card-title inline">ID: <span id="idtag" data-tag="{{property.id}}">{{property.id}}</span></h5>
                 <p class="card-text"><b>info: </b><textarea class="form-control" rows="5"
                         id="propInputInfo">{{property.info}}</textarea></p>
                 <p class="card-text"><b>address1: </b><input class="form-control mr-sm-2" type="text"

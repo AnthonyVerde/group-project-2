@@ -36,7 +36,8 @@ module.exports = function (app) {
         ownershiptype: req.body.ownershiptype,
         ammenities: req.body.ammenities,
         ammenitiesnearby: req.body.ammenitiesnearby,
-        photo: req.body.photo
+        photo: req.body.photo,
+        ownerId: req.body.ownerId
       })
       .then(function(dbProperty) {
         res.json(dbProperty);
@@ -45,8 +46,8 @@ module.exports = function (app) {
 
   // PUT route for updating a property. We can get the updated PROPERTY data from req.body
   app.post("/api/property/:id", function(req, res) {
-    // Update takes in an object describing the properties we want to update, and
-    // we use where to describe which objects we want to update
+    var ownerId = req.body.ownerId;
+
     db.property
       .update(
         {
@@ -70,8 +71,21 @@ module.exports = function (app) {
           }
         }
       )
-      .then(function(dbProperty) {
-        res.json(dbProperty);
+      .then(function() {
+        res.json(ownerId);
+      });
+  });
+
+  // Delete an example by id
+  app.delete("/api/property/:id", function(req, res) {
+    db.property
+      .destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(data) {
+        res.json(data);
       });
   });
 

@@ -5,7 +5,7 @@ var $clientPassword = $("#clientPassword");
 
 var $updateProperty = $("#updateProperty");
 var $addProperty = $("#addProperty");
-var $deleteProperty = $("#deleteProperty");
+var $deleteProperty = $(".deleteProperty");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -29,26 +29,40 @@ var API = {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "../../api/property",
+      url: "../../../api/property",
       data: JSON.stringify(newPropertyInfo)
+    }).then(function() {
+      window.location.href = "/owner/" + newPropertyInfo.ownerId;
     });
   },
 
   // Updates a property in the database
-  updateProperty: function(editedInfo, currentId) {
+  updateProperty: function(editedInfo) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "../../api/property/" + currentId,
+      url: "../../api/property/" + editedInfo.propertyId,
       data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/owner/" + data;
+    });
+  },
+
+  // Delete a property in the database
+  deleteProperty: function(propertyId, ownerId) {
+    return $.ajax({
+      url: "../../api/property/" + propertyId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/owner/" + ownerId;
     });
   },
 
   ///// DEMO CODE ... CAN BE DELETED /////
 
-  saveExample: function (example) {
+  saveExample: function(example) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
@@ -58,13 +72,13 @@ var API = {
       data: JSON.stringify(example)
     });
   },
-  getExamples: function () {
+  getExamples: function() {
     return $.ajax({
       url: "api/examples",
       type: "GET"
     });
   },
-  deleteExample: function (id) {
+  deleteExample: function(id) {
     return $.ajax({
       url: "api/examples/" + id,
       type: "DELETE"
@@ -130,12 +144,12 @@ var handleFormSubmit = function (event) {
 
 // handleDeleteBtnClick is called when an example's delete button is clicked
 // Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function () {
+var handleDeleteBtnClick = function() {
   var idToDelete = $(this)
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function () {
+  API.deleteExample(idToDelete).then(function() {
     refreshExamples();
   });
 };
@@ -144,16 +158,12 @@ var handleDeleteBtnClick = function () {
 
 // Click to EDIT a property
 
-// $updateProperty.on("click", function () {
-//   console.log("XXXXXXXXXXXXXX    UPDATE NOT REQUESTED    XXXXXXXXXXXXXX");
-// });
-
 var handleUpdateProperty = function(event) {
   event.preventDefault();
 
-  console.log("XXXXXXXXXXXXXX    UPDATE REQUESTED    XXXXXXXXXXXXXX");
-
   var editedInfo = {
+    propertyId: $("#propertyTag").data("tag"),
+    ownerId: $("#ownerTag").data("tag"),
     info: $("#propInputInfo").val().trim(),
     address1: $("#propInputAddress1").val().trim(),
     address2: $("#propInputAddress2").val().trim(),
@@ -169,20 +179,14 @@ var handleUpdateProperty = function(event) {
     photo: $("#propInputPhoto").val().trim(),
   };
 
-  var currentId = $("#idtag").data("tag");
-
-  API.updateProperty(editedInfo, currentId).then(function() {
-
-    console.log("XXXXXXXXXXXXXX    UPDATED    XXXXXXXXXXXXXX");
-  });
+  API.updateProperty(editedInfo);
 };
 
 var handleAddProperty = function(event) {
   event.preventDefault();
 
-  console.log("XXXXXXXXXXXXXX    ADD NEW PROPERTY    XXXXXXXXXXXXXX");
-
   var newPropertyInfo = {
+    ownerId: $("#idtag").data("tag"),
     info: $("#propInputInfo").val().trim(),
     address1: $("#propInputAddress1").val().trim(),
     address2: $("#propInputAddress2").val().trim(),
@@ -198,14 +202,19 @@ var handleAddProperty = function(event) {
     photo: $("#propInputPhoto").val().trim(),
   };
 
-  API.newProperty(newPropertyInfo).then(function() {
-    console.log("XXXXXXXXXXXXXX    ADDED    XXXXXXXXXXXXXX");
-  });
+  API.newProperty(newPropertyInfo);
+};
+
+var handleDeleteProperty = function() {
+  var ownerId = location.href.match(/([^\/]*)\/*$/)[1]
+  var propertyIdToDelete = $(this).data("tag");
+
+  API.deleteProperty(propertyIdToDelete, ownerId);
 };
 
 $updateProperty.on("click", handleUpdateProperty);
 $addProperty.on("click", handleAddProperty);
-
+$deleteProperty.on("click", handleDeleteProperty);
 
 var HTTP = {
   serveClientPage: function (clientID) {

@@ -1,11 +1,9 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Load landing page page
+  // Load landing page page when browsing the root URL
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function() {
-      res.render("index");
-    });
+    res.render("index");
   });
 
   // Load the client page based on clientID
@@ -44,7 +42,7 @@ module.exports = function(app) {
         // Then find all properties related to this owner
         ownerInfo = dbOwner;
         console.log(
-          "Fownd owner: " + ownerInfo.username + " with Id:" + ownerInfo.id
+          "Found owner: " + ownerInfo.username + " with Id:" + ownerInfo.id
         );
         db.property
           .findAndCountAll({
@@ -86,6 +84,8 @@ module.exports = function(app) {
 
   // Load the EDIT page of a property based on propertyID
   app.get("/property/edit/:id", function(req, res) {
+    var propertyInfo, ownerInfo;
+
     db.property
       .findOne({
         where: {
@@ -93,16 +93,45 @@ module.exports = function(app) {
         }
       })
       .then(function(dbProperty) {
-        console.log("Serving EDIT page for property with Id:" + dbProperty.id);
-        res.render("propertyedit", {
-          property: dbProperty
-        });
+        propertyInfo = dbProperty;
+        db.owner
+          .findOne({
+            where: {
+              id: propertyInfo.ownerId
+            }
+          })
+          .then(function(dbOwner) {
+            ownerInfo = dbOwner;
+            console.log(
+              "Serving EDIT page for " + ownerInfo.firstName + " " + ownerInfo.lastName + "'s property with Id:" + propertyInfo.id
+            );
+            res.render("propertyedit", {
+              property: propertyInfo,
+              owner: ownerInfo
+            });
+          });
       });
   });
 
   // Load page to add a new property
-  app.get("/property", function(req, res) {
-    res.render("propertyadd", {});
+  // app.get("/property", function(req, res) {
+  //   res.render("propertyadd", {});
+  // });
+  app.get("/property/add/:ownerId", function(req, res) {
+    db.owner
+      .findOne({
+        where: {
+          id: req.params.ownerId
+        }
+      })
+      .then(function(dbOwner) {
+        console.log(
+          "Serving page to ADD a new property for owner with Id:" + dbOwner.id
+        );
+        res.render("propertyadd", {
+          owner: dbOwner
+        });
+      });
   });
 
   // Load admin page

@@ -2,8 +2,7 @@
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
             <hr>
-            <h1>Create NEW property</h1>
-            <p>Use this page to add a new property</p>
+            <h1>Create NEW property for owner {{owner.firstName}} {{owner.lastName}} (ID# <span id="idtag" data-tag="{{owner.id}}">{{owner.id}}</span>)</h1>
         </div>
     </div>
     <hr>
@@ -14,7 +13,7 @@
                 {{!-- <h5 class="card-title">Editing property ID:
                     <input class="form-control mr-sm-2" type="text" aria-label="Search" id="propertyInfo">
                     {{property.id}}</h5> --}}
-                <h5 class="card-title inline" id="idtag" data-tag="{{property.id}}">ID: {{property.id}}</h5>
+                {{!-- <h5 class="card-title inline">ID: <span id="idtag" data-tag="{{owner.id}}">{{owner.id}}</span></h5> --}}
                 <p class="card-text"><b>info: </b><textarea class="form-control" rows="5"
                         id="propInputInfo">{{property.info}}</textarea></p>
                 <p class="card-text"><b>address1: </b><input class="form-control mr-sm-2" type="text"
