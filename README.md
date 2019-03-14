@@ -1,4 +1,4 @@
-# Team Dill - Project 2
+# Team Dill - Bamazon 2.0
 
 ## Project requirements
 * Use a Node and Express Web Server;
@@ -18,3 +18,20 @@
 * Meet good quality coding standards (indentation, scoping, naming).
 
 * Must not expose sensitive API key information on the server, see [Protecting-API-Keys-In-Node.md](../../../10-nodejs/03-Supplemental/Protecting-API-Keys-In-Node.md)
+
+## Project features
+Three levels of users:
+1. Customer
+    * search for products
+    * purchase products
+    * add/remove items from cart
+    * checkout
+
+2. Vendor
+    * Add/delete items to sell
+    * Upload image of items
+    * Adjust item information (price, quanitity, description, etc.)
+
+3. Admin
+    * Delete customer
+    

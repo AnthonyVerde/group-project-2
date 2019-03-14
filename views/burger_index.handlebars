@@ -1,0 +1,52 @@
+<div class="app">
+  <section id="logo">
+    <img src="/assets/images/eatdaburger_logo.png" alt="Eat da Burger Logo logo">
+  </section>
+
+  <div class="container">
+    <section class="row justify-content-md-center">
+      <div class="col-sm-5">
+        <div id="left">
+          <h3>Ready to eat</h3>
+          <ul>
+            {{#each burgers}}
+            {{#unless devoured}}
+            {{> burgers/burger-block devoured=true}}
+            {{/unless}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div id="middle"></div>
+      </div>
+      <div class="col-sm-5">
+        <div id="right">
+          <h3>Devoured</h3>
+          <ul>
+            {{#each burgers}}
+            {{#if devoured}}
+            {{> burgers/burger-block devoured=false}}
+            {{/if}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<hr>
+
+<section id="newBurger">
+
+  <h2>Add a new burger</h2>
+  <form class="create-form">
+
+    <div class="form-group">
+      <input type="text" id="order" name="name" placeholder="Enter new burger name here">
+      <button type="submit" class="btn btn-primary btn-lg">Create burger</button>
+    </div>
+  </form>
+
+</section>
