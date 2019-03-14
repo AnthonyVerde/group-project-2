@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "watch": "nodemon server.js",
     "lint": "eslint **/*.js --quiet",
     "fix": "eslint --fix .",
     "test": "npm run lint && cross-env NODE_ENV=test mocha -u tdd --reporter spec --exit"
@@ -14,7 +15,10 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
+    "jquery-confirm": "^3.3.4",
     "mysql2": "^1.6.4",
+    "nodemod": "^1.5.19",
+    "nodemon": "^1.18.10",
     "sequelize": "^4.41.2"
   },
   "devDependencies": {

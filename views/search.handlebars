@@ -1,0 +1,29 @@
+<section class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <h2>Search results</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="alert alert-success" role="alert">
+        Here are the results of your request
+    </div>
+    {{#each results}}
+    <a href="/property/{{id}}">
+    <div class="row justify-content-md-center">
+
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title inline">ID: {{this.id}}</h5>
+                <p class="card-text"><b>info:</b> {{info}}</p>
+                <p class="card-text"><b>address1:</b> {{this.address1}}</p>
+                <p class="card-text"><b>address2:</b> {{this.address2}}</p>
+                <p class="card-text"><b>photo:</b> <img src="{{this.photo}}" style="width: 200px"
+                        alt="Property photo"> </p>
+            </div>
+            <hr>
+        </div>
+    </div>
+    </a>
+    {{/each}}
+</section>

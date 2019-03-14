@@ -1,0 +1,59 @@
+<section class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <hr>
+            <h1>CLIENT's PAGE</h1>
+            <h2>Welcome back {{client.firstName}}!</h2>
+            <p> Here you can to see/edit your information as well as manage favorites.</p>
+        </div>
+    </div>
+    <hr>
+
+    <div class="card" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Account info</h5>
+            <p class="card-text">Username: <b>{{client.username}}</b></p>
+            <p class="card-text">Password: <b>{{client.password}}</b></p>
+            <p class="card-text">First name: <b>{{client.firstName}}</b></p>
+            <p class="card-text">Last name: <b>{{client.lastName}}</b></p>
+            <p class="card-text">Email: <b>{{client.email}}</b></p>
+            <p class="card-text">Phone: <b>{{client.phone}}</b></p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <a href="/client/edit/{{client.id}}"><button type="button" class="btn btn-primary">EDIT CLIENT'S INFO</button></a>
+    </div>
+    <hr>
+    <div class="alert alert-primary" role="alert">
+        Here are your favourites!
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            ***** Property 1 *****
+            <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            ***** Property 2 *****
+            <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
+        </div>
+    </div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            ***** Property 3 *****
+            <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
+        </div>
+    </div>
+    <hr>
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <a href="/client"><button type="button" class="btn btn-primary">User</button></a>
+            <a href="/owner"><button type="button" class="btn btn-success">Owner</button></a>
+            <a href="/admin"><button type="button" class="btn btn-secondary">Administrator</button></a>
+        </div>
+    </div>
+</section>
+
+

@@ -1,99 +1,443 @@
 // Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var $clientLogin = $("#btnClientLogin");
+var $updateClient = $("#updateClient");
+
+var $ownerLogin = $("#btnOwnerLogin");
+var $updateOwner = $("#updateOwner");
+
+var $updateProperty = $("#updateProperty");
+var $addProperty = $("#addProperty");
+var $deleteProperty = $(".deleteProperty");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  // Get a client info
+  getClient: function(client) {
+    return $.ajax({
+      url: "api/client/" + client.username,
+      type: "GET"
+    }).then(function(data) {
+      return data;
+    });
+  },
+
+  // Update a client
+  updateClient: function(editedInfo) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
+      url: "../../api/client/" + editedInfo.clientId,
+      data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/client/" + data;
     });
   },
-  getExamples: function() {
+
+  // Get an owner info
+  getOwner: function(owner) {
     return $.ajax({
-      url: "api/examples",
+      url: "api/owner/" + owner.username,
       type: "GET"
+    }).then(function(data) {
+      return data;
     });
   },
-  deleteExample: function(id) {
+
+  // Update an owner
+  updateOwner: function(editedInfo) {
     return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../api/owner/" + editedInfo.ownerId,
+      data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/owner/" + data;
     });
+  },
+
+  // Create a NEW property
+  newProperty: function(newPropertyInfo) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../../api/property",
+      data: JSON.stringify(newPropertyInfo)
+    }).then(function() {
+      window.location.href = "/owner/" + newPropertyInfo.ownerId;
+    });
+  },
+
+  // Update a property
+  updateProperty: function(editedInfo) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../api/property/" + editedInfo.propertyId,
+      data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/owner/" + data;
+    });
+  },
+
+  // Delete a property
+  deleteProperty: function(propertyId, ownerId) {
+    return $.ajax({
+      url: "../../api/property/" + propertyId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/owner/" + ownerId;
+    });
+  },
+
+  // Delete a property from the ADMIN page
+  adminDeleteProperty: function(propertyId) {
+    return $.ajax({
+      url: "../../api/property/" + propertyId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/admin";
+    });
+  },
+
+  // Delete an owner from the ADMIN page
+  adminDeleteOwner: function(ownerId) {
+    $.alert("Owner deleted!");
+    return $.ajax({
+      url: "../../api/owner/" + ownerId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/admin";
+    });
+  },
+
+  // REPEATED FUNCTIONS... DIFERENT NAME
+  // deleteOwner: function(ownerId) {
+  //   return $.ajax({
+  //     url: "../../api/owner/" + ownerID,
+  //     type: "DELETE"
+  //   }).then(function() {
+  //     window.location.href = "/admin";
+  //   });
+  // },
+
+  // User searches for properties
+  search: function(keyword) {
+    return $.ajax({
+      // headers: {
+      //   "Content-Type": "application/json"
+      // },
+      type: "GET",
+      url: "../../search/" + keyword,
+      // data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/search/" + data;
+    });
+    // return $.ajax({
+    //   url: "/search/" + keyword,
+    //   type: "GET"
+    // }).then(function(data) {
+    //   return data;
+    // });
   }
 };
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+//////// Functions for PROPERTIES ////////
 
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
-
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
+// Function called when adding a property
+var handleAddProperty = function(event) {
   event.preventDefault();
-
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
+  
+  // Gathering all elements to create a new item
+  var newPropertyInfo = {
+    ownerId: $("#idtag").data("tag"),
+    info: $("#propInputInfo").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
   };
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
+  // Call the funtion to create a new item and pass the new info
+  API.newProperty(newPropertyInfo);
+};
+
+// Function called when updating a property
+var handleUpdateProperty = function(event) {
+  event.preventDefault();
+
+  // Gathering all elements to update the registry with
+  var editedInfo = {
+    propertyId: $("#propertyTag").data("tag"),
+    ownerId: $("#ownerTag").data("tag"),
+    info: $("#propInputInfo").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
+  };
+
+  // Call the update funtion and pass the updated propertyinfo
+  API.updateProperty(editedInfo);
+};
+
+// Delete a property
+var handleDeleteProperty = function() {
+  var ownerId = location.href.match(/([^\/]*)\/*$/)[1];
+  var propertyIdToDelete = $(this).data("tag");
+
+  API.deleteProperty(propertyIdToDelete, ownerId);
+};
+
+// Delete a property from ADMIN page
+var handleAdminDeleteProperty = function() {
+  var propertyIdToDelete = $(this).attr("propId");
+
+  $.confirm({
+    title: "Delete Property " + propertyIdToDelete,
+    content: "Confirm delete!",
+    buttons: {
+      confirm: function() {
+        API.adminDeleteProperty(propertyIdToDelete);
+      },
+      cancel: function() {
+        $.alert("Canceled!");
+      },
+      somethingElse: {
+        text: "Something else",
+        btnClass: "btn-blue",
+        keys: ["enter", "shift"],
+        action: function() {
+          $.alert("Something else?");
+        }
+      }
+    }
+  });
+};
+
+$addProperty.on("click", handleAddProperty);
+$updateProperty.on("click", handleUpdateProperty);
+$deleteProperty.on("click", handleDeleteProperty);
+$(".adminDeleteProperty").on("click", handleAdminDeleteProperty);
+
+//////// Functions for OWNERS ////////
+
+// Function called when updating an owner registry
+var handleUpdateOwner = function(event) {
+  event.preventDefault();
+
+  // Gathering all elements to update the registry with
+  var editedInfo = {
+    ownerId: $("#idtag").data("tag"),
+    username: $("#propInputUsername").val().trim(),
+    password: $("#propInputPassword").val().trim(),
+    firstName: $("#propInputfirstName").val().trim(),
+    lastName: $("#propInputLastName").val().trim(),
+    email: $("#propInputEmail").val().trim(),
+    phone: $("#propInputPhone").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    city: $("#propInputCity").val().trim(),
+    province: $("#propInputProvince").val().trim(),
+    country: $("#propInputCountry").val().trim(),
+  };
+
+  // Call the update funtion and pass the updted info
+  API.updateOwner(editedInfo);
+};
+
+// Owner log in
+var handleBtnOwnerLogin = function() {
+  event.preventDefault();
+
+  var wrongPassLbl = false;
+  var client = {
+    username: $("#ownerUsername").val().trim(),
+    password: $("#ownerPassword").val().trim()
+  };
+
+  API.getOwner(client).then(function(data) {
+    if (
+      $("#ownerPassword")
+        .val()
+        .trim() === data.password
+    ) {
+      console.log("Password matches");
+      $("#psswdLbl").html("Password");
+      window.location.href = "/owner/" + data.id;
+    } else {
+      console.log("Wrong password");
+      if (!wrongPassLbl) {
+        $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
+      }
+      wrongPassLbl = true;
+    }
+  });
+};
+
+// Delete an owner from ADMIN page
+var handleAdminDeleteOwner = function() {
+  var OwnerIdToDelete = $(this).attr("ownerId");
+  $.confirm({
+    title: "Delete Owner " + OwnerIdToDelete,
+    content: "All properties associated with this owner will be deleted!",
+    buttons: {
+      confirm: function() {
+        API.adminDeleteOwner(OwnerIdToDelete);
+      },
+      cancel: function() {
+        $.alert("Canceled!");
+      },
+      somethingElse: {
+        text: "Something else",
+        btnClass: "btn-blue",
+        keys: ["enter", "shift"],
+        action: function() {
+          $.alert("Something else?");
+        }
+      }
+    }
+  });
+};
+
+$updateOwner.on("click", handleUpdateOwner);
+$ownerLogin.on("click", handleBtnOwnerLogin);
+$(".adminDeleteOwner").on("click", handleAdminDeleteOwner);
+
+//////// Functions for CLIENTS ////////
+
+// var HTTP = {
+//   serveClientPage: function(clientID) {
+//     return $.ajax({
+//       url: "/client/" + clientID,
+//       type: "GET"
+//     });
+//   }
+// };
+
+/// UPDATE CLIENT GOES HERE
+
+// Function called when updating an owner registry
+var handleUpdateClient = function(event) {
+  event.preventDefault();
+
+  // Gathering all elements to update the registry with
+  var editedInfo = {
+    clientId: $("#idtag").data("tag"),
+    username: $("#propInputUsername").val().trim(),
+    password: $("#propInputPassword").val().trim(),
+    firstName: $("#propInputfirstName").val().trim(),
+    lastName: $("#propInputLastName").val().trim(),
+    email: $("#propInputEmail").val().trim(),
+    phone: $("#propInputPhone").val().trim()
+  };
+
+  // Call the update funtion and pass the updted info
+  API.updateClient(editedInfo);
+};
+
+// Client log in
+var handleBtnClientLogin = function() {
+  event.preventDefault();
+
+  var wrongPassLbl = false;
+  var client = {
+    username: $("#clientUsername").val().trim(),
+    password: $("#clientPassword").val().trim()
+  };
+
+  API.getClient(client).then(function(data) {
+    if (
+      $("#clientPassword")
+        .val()
+        .trim() === data.password
+    ) {
+      console.log("Password matches");
+      $("#psswdLbl").html("Password");
+      window.location.href = "/client/" + data.id;
+    } else {
+      console.log("Wrong password");
+      if (!wrongPassLbl) {
+        $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
+      }
+      wrongPassLbl = true;
+    }
+  });
+};
+
+$updateClient.on("click", handleUpdateClient);
+$clientLogin.on("click", handleBtnClientLogin);
+
+//////// Functions for SEARCH ////////
+
+// User searching for properties
+var handleSearch = function() {
+  event.preventDefault();
+  var keyword = $("#keyword")
+    .val()
+    .trim();
+  window.location.href = "/search/" + keyword;
+  // API.search(keyword);
+};
+
+$("#search").on("click", handleSearch);
+
+//////// MODAL logic
+
+// USER log in
+$("#clientLogIn").on("click", function() {
+  console.log("Open USER modal");
+
+  // Display CLIENT login modal
+  $("#clientModal").modal({
+    backdrop: "static",
+    keyboard: false
+  });
+});
+
+// OWNER log in
+$("#ownerLogIn").on("click", function() {
+  console.log("Open OWNER modal");
+
+  // Display OWNER login modal
+  $("#ownerModal").modal({
+    backdrop: "static",
+    keyboard: false
+  });
+});
+
+// Modal validation logic
+$("#btnLogin").click(function(event) {
+  //Fetch form to apply custom Bootstrap validation
+  var form = $("#formLogin");
+
+  if (form[0].checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
-  });
-
-  $exampleText.val("");
-  $exampleDescription.val("");
-};
-
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
-
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
-  });
-};
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+  form.addClass("was-validated");
+});
