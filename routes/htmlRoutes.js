@@ -29,6 +29,21 @@ module.exports = function(app) {
       });
   });
 
+  // Load the EDIT page for an client based on clientId
+  app.get("/client/edit/:id", function(req, res) {
+    db.client
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbclient) {
+        res.render("clientedit", {
+          client: dbclient
+        });
+      });
+  });
+
   /////////// Routes for OWNERS ///////////
 
   // Load OWNER info page based on ownerId

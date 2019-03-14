@@ -12,15 +12,19 @@
     <div class="card" style="width: 30rem;">
         <div class="card-body">
             <h5 class="card-title">Account info</h5>
+            <p class="card-text">Username: <b>{{client.username}}</b></p>
+            <p class="card-text">Password: <b>{{client.password}}</b></p>
             <p class="card-text">First name: <b>{{client.firstName}}</b></p>
             <p class="card-text">Last name: <b>{{client.lastName}}</b></p>
             <p class="card-text">Email: <b>{{client.email}}</b></p>
             <p class="card-text">Phone: <b>{{client.phone}}</b></p>
-            <p class="card-text">Address: <b>{{client.address1}} {{client.address2}}, {{client.city}}, {{client.province}}, {{client.country}}</b></p>
         </div>
     </div>
     <hr>
-
+    <div>
+        <a href="/client/edit/{{client.id}}"><button type="button" class="btn btn-primary">EDIT CLIENT'S INFO</button></a>
+    </div>
+    <hr>
     <div class="alert alert-primary" role="alert">
         Here are your favourites!
     </div>

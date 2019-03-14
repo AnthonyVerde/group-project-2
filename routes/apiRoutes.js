@@ -20,14 +20,39 @@ module.exports = function(app) {
       });
   });
 
+  // Updating existing client based on clientId
+  app.post("/api/client/:id", function(req, res) {
+    var clientId = req.body.clientId;
+
+    db.client
+      .update(
+        {
+          username: req.body.username,
+          password: req.body.password,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          phone: req.body.phone,
+        },
+        {
+          where: {
+            id: clientId
+          }
+        }
+      )
+      .then(function() {
+        res.json(clientId);
+      });
+  });
+
   /////////// Routes for OWNERS ///////////
 
   // Owner login
-  app.get("/api/owner/:id", function(req, res) {
+  app.get("/api/owner/:username", function(req, res) {
     db.owner
       .findOne({
         where: {
-          username: req.params.id
+          username: req.params.username
         }
       })
       .then(function(dbOwner) {

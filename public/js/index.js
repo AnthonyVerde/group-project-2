@@ -1,13 +1,13 @@
 // Get references to page elements
 var $clientLogin = $("#btnClientLogin");
-var $clientUsername = $("#clientUsername");
-var $clientPassword = $("#clientPassword");
+var $updateClient = $("#updateClient");
+
+var $ownerLogin = $("#btnOwnerLogin");
+var $updateOwner = $("#updateOwner");
 
 var $updateProperty = $("#updateProperty");
 var $addProperty = $("#addProperty");
 var $deleteProperty = $(".deleteProperty");
-
-var $updateOwner = $("#updateOwner");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
@@ -15,6 +15,30 @@ var API = {
   getClient: function(client) {
     return $.ajax({
       url: "api/client/" + client.username,
+      type: "GET"
+    }).then(function(data) {
+      return data;
+    });
+  },
+
+  // Update a client
+  updateClient: function(editedInfo) {
+    return $.ajax({
+      headers: {
+        "Content-Type": "application/json"
+      },
+      type: "POST",
+      url: "../../api/client/" + editedInfo.clientId,
+      data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/client/" + data;
+    });
+  },
+
+  // Get an owner info
+  getOwner: function(owner) {
+    return $.ajax({
+      url: "api/owner/" + owner.username,
       type: "GET"
     }).then(function(data) {
       return data;
@@ -190,7 +214,37 @@ var handleUpdateOwner = function(event) {
   API.updateOwner(editedInfo);
 };
 
+// Owner log in
+var handleBtnOwnerLogin = function() {
+  event.preventDefault();
+
+  var wrongPassLbl = false;
+  var client = {
+    username: $("#ownerUsername").val().trim(),
+    password: $("#ownerPassword").val().trim()
+  };
+
+  API.getOwner(client).then(function(data) {
+    if (
+      $("#ownerPassword")
+        .val()
+        .trim() === data.password
+    ) {
+      console.log("Password matches");
+      $("#psswdLbl").html("Password");
+      window.location.href = "/owner/" + data.id;
+    } else {
+      console.log("Wrong password");
+      if (!wrongPassLbl) {
+        $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
+      }
+      wrongPassLbl = true;
+    }
+  });
+};
+
 $updateOwner.on("click", handleUpdateOwner);
+$ownerLogin.on("click", handleBtnOwnerLogin);
 
 //////// Functions for CLIENTS ////////
 
@@ -205,29 +259,55 @@ $updateOwner.on("click", handleUpdateOwner);
 
 /// UPDATE CLIENT GOES HERE
 
+// Function called when updating an owner registry
+var handleUpdateClient = function(event) {
+  event.preventDefault();
+
+  // Gathering all elements to update the registry with
+  var editedInfo = {
+    clientId: $("#idtag").data("tag"),
+    username: $("#propInputUsername").val().trim(),
+    password: $("#propInputPassword").val().trim(),
+    firstName: $("#propInputfirstName").val().trim(),
+    lastName: $("#propInputLastName").val().trim(),
+    email: $("#propInputEmail").val().trim(),
+    phone: $("#propInputPhone").val().trim()
+  };
+
+  // Call the update funtion and pass the updted info
+  API.updateClient(editedInfo);
+};
+
+// Client log in
 var handleBtnClientLogin = function() {
   event.preventDefault();
 
+  var wrongPassLbl = false;
   var client = {
-    username: $clientUsername.val().trim(),
-    password: $clientPassword.val().trim()
+    username: $("#clientUsername").val().trim(),
+    password: $("#clientPassword").val().trim()
   };
 
   API.getClient(client).then(function(data) {
-    $("#clientModal")
-      .modal("hide")
-      .then(function() {
-        HTTP.serveClientPage(data.id);
-      });
-
-    if ($clientPassword.val().trim() === data.password) {
+    if (
+      $("#clientPassword")
+        .val()
+        .trim() === data.password
+    ) {
       console.log("Password matches");
-      // Hide the CLIENT login modal
+      $("#psswdLbl").html("Password");
+      window.location.href = "/client/" + data.id;
+    } else {
+      console.log("Wrong password");
+      if (!wrongPassLbl) {
+        $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
+      }
+      wrongPassLbl = true;
     }
   });
 };
 
-// Add event listeners to the submit and delete buttons
+$updateClient.on("click", handleUpdateClient);
 $clientLogin.on("click", handleBtnClientLogin);
 
 //////// MODAL logic
