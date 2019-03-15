@@ -95,6 +95,57 @@ var API = {
     }).then(function() {
       window.location.href = "/owner/" + ownerId;
     });
+  },
+
+  // Delete a property from the ADMIN page
+  adminDeleteProperty: function(propertyId) {
+    return $.ajax({
+      url: "../../api/property/" + propertyId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/admin";
+    });
+  },
+
+  // Delete an owner from the ADMIN page
+  adminDeleteOwner: function(ownerId) {
+    $.alert("Owner deleted!");
+    return $.ajax({
+      url: "../../api/owner/" + ownerId,
+      type: "DELETE"
+    }).then(function() {
+      window.location.href = "/admin";
+    });
+  },
+
+  // REPEATED FUNCTIONS... DIFERENT NAME
+  // deleteOwner: function(ownerId) {
+  //   return $.ajax({
+  //     url: "../../api/owner/" + ownerID,
+  //     type: "DELETE"
+  //   }).then(function() {
+  //     window.location.href = "/admin";
+  //   });
+  // },
+
+  // User searches for properties
+  search: function(keyword) {
+    return $.ajax({
+      // headers: {
+      //   "Content-Type": "application/json"
+      // },
+      type: "GET",
+      url: "../../search/" + keyword,
+      // data: JSON.stringify(editedInfo)
+    }).then(function(data) {
+      window.location.href = "/search/" + data;
+    });
+    // return $.ajax({
+    //   url: "/search/" + keyword,
+    //   type: "GET"
+    // }).then(function(data) {
+    //   return data;
+    // });
   }
 };
 
@@ -103,49 +154,23 @@ var API = {
 // Function called when adding a property
 var handleAddProperty = function(event) {
   event.preventDefault();
-
+  
   // Gathering all elements to create a new item
   var newPropertyInfo = {
     ownerId: $("#idtag").data("tag"),
-    info: $("#propInputInfo")
-      .val()
-      .trim(),
-    address1: $("#propInputAddress1")
-      .val()
-      .trim(),
-    address2: $("#propInputAddress2")
-      .val()
-      .trim(),
-    postalcode: $("#propInputPostalCode")
-      .val()
-      .trim(),
-    propertype: $("#propInputProperType")
-      .val()
-      .trim(),
-    price_string: $("#propInputPrice_string")
-      .val()
-      .trim(),
-    price_dec: $("#propInputPrice_dec")
-      .val()
-      .trim(),
-    bedrooms: $("#propInputBedrooms")
-      .val()
-      .trim(),
-    bathrooms: $("#propInputBathrooms")
-      .val()
-      .trim(),
-    ownershiptype: $("#propInputOwnershipType")
-      .val()
-      .trim(),
-    ammenities: $("#propInputAmmenities")
-      .val()
-      .trim(),
-    ammenitiesnearby: $("#propInputAmmenitiesNearby")
-      .val()
-      .trim(),
-    photo: $("#propInputPhoto")
-      .val()
-      .trim()
+    info: $("#propInputInfo").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
   };
 
   // Call the funtion to create a new item and pass the new info
@@ -160,75 +185,26 @@ var handleUpdateProperty = function(event) {
   var editedInfo = {
     propertyId: $("#propertyTag").data("tag"),
     ownerId: $("#ownerTag").data("tag"),
-    info: $("#propInputInfo")
-      .val()
-      .trim(),
-    address1: $("#propInputAddress1")
-      .val()
-      .trim(),
-    address2: $("#propInputAddress2")
-      .val()
-      .trim(),
-    postalcode: $("#propInputPostalCode")
-      .val()
-      .trim(),
-    propertype: $("#propInputProperType")
-      .val()
-      .trim(),
-    price_string: $("#propInputPrice_string")
-      .val()
-      .trim(),
-    price_dec: $("#propInputPrice_dec")
-      .val()
-      .trim(),
-    bedrooms: $("#propInputBedrooms")
-      .val()
-      .trim(),
-    bathrooms: $("#propInputBathrooms")
-      .val()
-      .trim(),
-    ownershiptype: $("#propInputOwnershipType")
-      .val()
-      .trim(),
-    ammenities: $("#propInputAmmenities")
-      .val()
-      .trim(),
-    ammenitiesnearby: $("#propInputAmmenitiesNearby")
-      .val()
-      .trim(),
-    photo: $("#propInputPhoto")
-      .val()
-      .trim()
+    info: $("#propInputInfo").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    postalcode: $("#propInputPostalCode").val().trim(),
+    propertype: $("#propInputProperType").val().trim(),
+    price_string: $("#propInputPrice_string").val().trim(),
+    price_dec: $("#propInputPrice_dec").val().trim(),
+    bedrooms: $("#propInputBedrooms").val().trim(),
+    bathrooms: $("#propInputBathrooms").val().trim(),
+    ownershiptype: $("#propInputOwnershipType").val().trim(),
+    ammenities: $("#propInputAmmenities").val().trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
+    photo: $("#propInputPhoto").val().trim(),
   };
 
   // Call the update funtion and pass the updated propertyinfo
   API.updateProperty(editedInfo);
 };
 
-// // Function called when updating a property
-// var handleAddProperty = function(event) {
-//   event.preventDefault();
-
-//   var newPropertyInfo = {
-//     ownerId: $("#idtag").data("tag"),
-//     info: $("#propInputInfo").val().trim(),
-//     address1: $("#propInputAddress1").val().trim(),
-//     address2: $("#propInputAddress2").val().trim(),
-//     postalcode: $("#propInputPostalCode").val().trim(),
-//     propertype: $("#propInputProperType").val().trim(),
-//     price_string: $("#propInputPrice_string").val().trim(),
-//     price_dec: $("#propInputPrice_dec").val().trim(),
-//     bedrooms: $("#propInputBedrooms").val().trim(),
-//     bathrooms: $("#propInputBathrooms").val().trim(),
-//     ownershiptype: $("#propInputOwnershipType").val().trim(),
-//     ammenities: $("#propInputAmmenities").val().trim(),
-//     ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
-//     photo: $("#propInputPhoto").val().trim(),
-//   };
-
-//   API.newProperty(newPropertyInfo);
-// };
-
+// Delete a property
 var handleDeleteProperty = function() {
   var ownerId = location.href.match(/([^\/]*)\/*$/)[1];
   var propertyIdToDelete = $(this).data("tag");
@@ -236,9 +212,36 @@ var handleDeleteProperty = function() {
   API.deleteProperty(propertyIdToDelete, ownerId);
 };
 
+// Delete a property from ADMIN page
+var handleAdminDeleteProperty = function() {
+  var propertyIdToDelete = $(this).attr("propId");
+
+  $.confirm({
+    title: "Delete Property " + propertyIdToDelete,
+    content: "Confirm delete!",
+    buttons: {
+      confirm: function() {
+        API.adminDeleteProperty(propertyIdToDelete);
+      },
+      cancel: function() {
+        $.alert("Canceled!");
+      },
+      somethingElse: {
+        text: "Something else",
+        btnClass: "btn-blue",
+        keys: ["enter", "shift"],
+        action: function() {
+          $.alert("Something else?");
+        }
+      }
+    }
+  });
+};
+
 $addProperty.on("click", handleAddProperty);
 $updateProperty.on("click", handleUpdateProperty);
 $deleteProperty.on("click", handleDeleteProperty);
+$(".adminDeleteProperty").on("click", handleAdminDeleteProperty);
 
 //////// Functions for OWNERS ////////
 
@@ -249,39 +252,17 @@ var handleUpdateOwner = function(event) {
   // Gathering all elements to update the registry with
   var editedInfo = {
     ownerId: $("#idtag").data("tag"),
-    username: $("#propInputUsername")
-      .val()
-      .trim(),
-    password: $("#propInputPassword")
-      .val()
-      .trim(),
-    firstName: $("#propInputfirstName")
-      .val()
-      .trim(),
-    lastName: $("#propInputLastName")
-      .val()
-      .trim(),
-    email: $("#propInputEmail")
-      .val()
-      .trim(),
-    phone: $("#propInputPhone")
-      .val()
-      .trim(),
-    address1: $("#propInputAddress1")
-      .val()
-      .trim(),
-    address2: $("#propInputAddress2")
-      .val()
-      .trim(),
-    city: $("#propInputCity")
-      .val()
-      .trim(),
-    province: $("#propInputProvince")
-      .val()
-      .trim(),
-    country: $("#propInputCountry")
-      .val()
-      .trim()
+    username: $("#propInputUsername").val().trim(),
+    password: $("#propInputPassword").val().trim(),
+    firstName: $("#propInputfirstName").val().trim(),
+    lastName: $("#propInputLastName").val().trim(),
+    email: $("#propInputEmail").val().trim(),
+    phone: $("#propInputPhone").val().trim(),
+    address1: $("#propInputAddress1").val().trim(),
+    address2: $("#propInputAddress2").val().trim(),
+    city: $("#propInputCity").val().trim(),
+    province: $("#propInputProvince").val().trim(),
+    country: $("#propInputCountry").val().trim(),
   };
 
   // Call the update funtion and pass the updted info
@@ -294,12 +275,8 @@ var handleBtnOwnerLogin = function() {
 
   var wrongPassLbl = false;
   var client = {
-    username: $("#ownerUsername")
-      .val()
-      .trim(),
-    password: $("#ownerPassword")
-      .val()
-      .trim()
+    username: $("#ownerUsername").val().trim(),
+    password: $("#ownerPassword").val().trim()
   };
 
   API.getOwner(client).then(function(data) {
@@ -321,8 +298,34 @@ var handleBtnOwnerLogin = function() {
   });
 };
 
+// Delete an owner from ADMIN page
+var handleAdminDeleteOwner = function() {
+  var OwnerIdToDelete = $(this).attr("ownerId");
+  $.confirm({
+    title: "Delete Owner " + OwnerIdToDelete,
+    content: "All properties associated with this owner will be deleted!",
+    buttons: {
+      confirm: function() {
+        API.adminDeleteOwner(OwnerIdToDelete);
+      },
+      cancel: function() {
+        $.alert("Canceled!");
+      },
+      somethingElse: {
+        text: "Something else",
+        btnClass: "btn-blue",
+        keys: ["enter", "shift"],
+        action: function() {
+          $.alert("Something else?");
+        }
+      }
+    }
+  });
+};
+
 $updateOwner.on("click", handleUpdateOwner);
 $ownerLogin.on("click", handleBtnOwnerLogin);
+$(".adminDeleteOwner").on("click", handleAdminDeleteOwner);
 
 //////// Functions for CLIENTS ////////
 
@@ -344,24 +347,12 @@ var handleUpdateClient = function(event) {
   // Gathering all elements to update the registry with
   var editedInfo = {
     clientId: $("#idtag").data("tag"),
-    username: $("#propInputUsername")
-      .val()
-      .trim(),
-    password: $("#propInputPassword")
-      .val()
-      .trim(),
-    firstName: $("#propInputfirstName")
-      .val()
-      .trim(),
-    lastName: $("#propInputLastName")
-      .val()
-      .trim(),
-    email: $("#propInputEmail")
-      .val()
-      .trim(),
-    phone: $("#propInputPhone")
-      .val()
-      .trim()
+    username: $("#propInputUsername").val().trim(),
+    password: $("#propInputPassword").val().trim(),
+    firstName: $("#propInputfirstName").val().trim(),
+    lastName: $("#propInputLastName").val().trim(),
+    email: $("#propInputEmail").val().trim(),
+    phone: $("#propInputPhone").val().trim()
   };
 
   // Call the update funtion and pass the updted info
@@ -374,12 +365,8 @@ var handleBtnClientLogin = function() {
 
   var wrongPassLbl = false;
   var client = {
-    username: $("#clientUsername")
-      .val()
-      .trim(),
-    password: $("#clientPassword")
-      .val()
-      .trim()
+    username: $("#clientUsername").val().trim(),
+    password: $("#clientPassword").val().trim()
   };
 
   API.getClient(client).then(function(data) {
@@ -403,6 +390,20 @@ var handleBtnClientLogin = function() {
 
 $updateClient.on("click", handleUpdateClient);
 $clientLogin.on("click", handleBtnClientLogin);
+
+//////// Functions for SEARCH ////////
+
+// User searching for properties
+var handleSearch = function() {
+  event.preventDefault();
+  var keyword = $("#keyword")
+    .val()
+    .trim();
+  window.location.href = "/search/" + keyword;
+  // API.search(keyword);
+};
+
+$("#search").on("click", handleSearch);
 
 //////// MODAL logic
 
@@ -428,6 +429,7 @@ $("#ownerLogIn").on("click", function() {
   });
 });
 
+// Modal validation logic
 $("#btnLogin").click(function(event) {
   //Fetch form to apply custom Bootstrap validation
   var form = $("#formLogin");

@@ -156,14 +156,6 @@ module.exports = function(app) {
           })
           .then(function(dbOwner) {
             ownerInfo = dbOwner;
-            console.log(
-              "Serving EDIT page for " +
-                ownerInfo.firstName +
-                " " +
-                ownerInfo.lastName +
-                "'s property with Id:" +
-                propertyInfo.id
-            );
             res.render("propertyedit", {
               property: propertyInfo,
               owner: ownerInfo
@@ -176,14 +168,49 @@ module.exports = function(app) {
 
   // Load admin page
   app.get("/admin", function(req, res) {
-    res.render("admin", {});
+    allOWnerProperties = [];
+    db.owner
+      .findAll({
+        include: [db.property]
+      })
+      .then(function(owners) {
+        res.render("admin", {
+          allOwners: owners
+        });
+      });
   });
 
   /////////// Routes for SEARCH ///////////
 
   // Load search results page
-  app.get("/search", function(req, res) {
-    res.render("search", {});
+  app.get("/search/:keyword", function (req, res) {
+    db.property
+      .findAll({
+        where: {
+          $or: {
+            address2: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            info: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ammenities: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ownershiptype: {
+              $like: "%" + req.params.keyword + "%"
+            },
+            ammenitiesnearby: {
+              $like: "%" + req.params.keyword + "%"
+            }
+          }
+        }
+      })
+      .then(function(dbOwner) {
+        res.render("search", {
+          results: dbOwner
+        });
+      });
   });
 
   /////////// Routes for OTHER ///////////

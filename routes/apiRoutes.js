@@ -12,10 +12,6 @@ module.exports = function(app) {
         }
       })
       .then(function(dbClient) {
-        // console.log("= API CALL =======================");
-        // console.log("Username: " + dbClient.username);
-        // console.log("Password: " + dbClient.password);
-        // console.log("ID: " + dbClient.id);
         res.json(dbClient);
       });
   });
@@ -32,7 +28,7 @@ module.exports = function(app) {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          phone: req.body.phone,
+          phone: req.body.phone
         },
         {
           where: {
@@ -56,10 +52,6 @@ module.exports = function(app) {
         }
       })
       .then(function(dbOwner) {
-        // console.log("= API CALL =======================");
-        // console.log("Username: " + dbClient.username);
-        // console.log("Password: " + dbClient.password);
-        // console.log("ID: " + dbClient.id);
         res.json(dbOwner);
       });
   });
@@ -94,12 +86,23 @@ module.exports = function(app) {
       });
   });
 
+  // Delete existing owner based on propertyId
+  app.delete("/api/owner/:id", function(req, res) {
+    db.owner
+      .destroy({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(data) {
+        res.json(data);
+      });
+  });
+
   /////////// Routes for PROPERTIES ///////////
 
   // Adding a new property
   app.post("/api/property", function(req, res) {
-    // Update takes in an object describing the properties we want to update, and
-    // we use where to describe which objects we want to update
     db.property
       .create({
         info: req.body.info,
