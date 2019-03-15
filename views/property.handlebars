@@ -1,6 +1,10 @@
-<section class="container">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" id="nav-logo-container" href="/"><img src="/images/property-pal-logo-horiz.png"></a>
+</nav>
+
+<section class="container white-bg-container">
     <div class="row justify-content-md-center">
-        <div class="col-md-auto">
+        <div class="col-12">
             <hr>
             <h1>PROPERTY INFO - ID {{property.id}}</h1>
         </div>
@@ -23,7 +27,7 @@
                 <p class="card-text"><b>ownershiptype:</b> {{property.ownershiptype}}</p>
                 <p class="card-text"><b>ammenities:</b> {{property.ammenities}}</p>
                 <p class="card-text"><b>ammenitiesnearby:</b> {{property.ammenitiesnearby}}</p>
-                <p class="card-text"><b>photo:</b> <img src="{{property.photo}}" style="width: 200px" alt="Property photo"> </p>
+                <p class="card-text"><img src="{{property.photo}}" style="width: 200px" alt="Property photo"> </p>
                 <p class="card-text"><small>createdAt: {{property.createdAt}}</small></p>
                 <p class="card-text"><small>updatedAt: {{property.updatedAt}}</small></p>
             </div>
