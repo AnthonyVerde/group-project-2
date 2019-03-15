@@ -4,37 +4,63 @@
 
 <section class="container white-bg-container">
     <div class="row justify-content-md-center">
-        <div class="col-12">
-            <hr>
-            <h1>PROPERTY INFO - ID {{property.id}}</h1>
+        <div class="col-12 page-banner">
+
+            <h1>PROPERTY INFORMATION</h1>
+            <h2>Property ID: {{property.id}}</h2>
         </div>
     </div>
-    <hr>
-    <div class="row justify-content-md-center">
 
-        <div class="card" style="width: 100%;">
-            <div class="card-body">
-                <h5 class="card-title inline">ID: {{property.id}}</h5>
-                <p class="card-text"><b>info:</b> {{property.info}}</p>
-                <p class="card-text"><b>address1:</b> {{property.address1}}</p>
-                <p class="card-text"><b>address2:</b> {{property.address2}}</p>
-                <p class="card-text"><b>postalcode:</b> {{property.postalcode}}</p>
-                <p class="card-text"><b>propertype:</b> {{property.propertype}}</p>
-                <p class="card-text"><b>price_string:</b> {{property.price_string}}</p>
-                <p class="card-text"><b>price_dec:</b> {{property.price_dec}}</p>
-                <p class="card-text"><b>bedrooms:</b> {{property.bedrooms}}</p>
-                <p class="card-text"><b>bathrooms:</b> {{property.bathrooms}}</p>
-                <p class="card-text"><b>ownershiptype:</b> {{property.ownershiptype}}</p>
-                <p class="card-text"><b>ammenities:</b> {{property.ammenities}}</p>
-                <p class="card-text"><b>ammenitiesnearby:</b> {{property.ammenitiesnearby}}</p>
-                <p class="card-text"><img src="{{property.photo}}" style="width: 200px" alt="Property photo"> </p>
-                <p class="card-text"><small>createdAt: {{property.createdAt}}</small></p>
-                <p class="card-text"><small>updatedAt: {{property.updatedAt}}</small></p>
+    <div class="property-information">
+        <div class="row">
+            <div class="card property-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <p class="card-text"> <img src="{{property.photo}}" style="width: 200px"
+                                    alt="Property photo">
+                            </p>
+                            <h4 class="card-text"><b>Price: {{property.price_string}}</b></h4>
+                        </div>
+                        <div class="col-9">
+                            <p class="card-text">{{property.info}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><b>Address:</b><br>
+                                {{property.address1}}<br>{{property.address2}}<br>{{property.postalcode}}
+                            </p>
+
+                            <p class="card-text"><b>Property Type:</b> {{property.propertype}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><b>Bedrooms:</b> {{property.bedrooms}}</p>
+                            <p class="card-text"><b>Bathrooms:</b> {{property.bathrooms}}</p>
+                            <p class="card-text"><b>Ownership Type:</b> {{property.ownershiptype}}</p>
+                            <p class="card-text"><b>Features:</b> {{property.ammenities}}</p>
+                            <p class="card-text"><b>Ammenities Nearby:</b> {{property.ammenitiesnearby}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="card-text"><small>createdAt: {{property.createdAt}}</small></p>
+                            <p class="card-text"><small>updatedAt: {{property.updatedAt}}</small></p>
+                        </div>
+                        <div class="col-6">
+                            <div class="property-buttons">
+                                <a href="/property/edit/{{property.id}}"><button type="button"
+                                        class="btn btn-success">Update Property ID
+                                        #{{property.id}} Lisitng Details</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <hr>
+
         </div>
-        <a href="/property/edit/{{property.id}}"><button type="button" class="btn btn-success">UPDATE PROPERTY
-                REF#{{property.id}}</button></a>
     </div>
     <hr>
 

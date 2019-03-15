@@ -4,30 +4,50 @@
 
 <section class="container white-bg-container">
     <div class="row justify-content-md-center">
-        <div class="col-12">
-            <h2>Search results</h2>
+        <div class="col-12 page-banner">
+            <h1>Search results</h1>
         </div>
     </div>
-    <hr>
-    <div class="alert alert-success" role="alert">
-        Here are the results of your request
-    </div>
+   <div class="property-information">
     {{#each results}}
-    <a href="/property/{{id}}">
-    <div class="row justify-content-md-center">
+    <a href="/property/{{id}}" id="searchResults"></a>
+    <div class="row">
+            <div class="card property-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <p class="card-text"> <img src="{{this.photo}}" style="width: 200px"
+                                    alt="Property photo">
+                            </p>
+                            <h4 class="card-text"><b>Price: {{this.price_string}}</b></h4>
+                        </div>
+                        <div class="col-9">
+                            <p class="card-text">{{this.info}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><b>Address:</b><br>
+                                {{this.address1}}<br>{{this.address2}}<br>{{this.postalcode}}
+                            </p>
 
-        <div class="card" style="width: 100%;">
-            <div class="card-body" id="searchResults">
-                <h5 class="card-title inline">ID: {{this.id}}</h5>
-                <p class="card-text"><b>info:</b> {{info}}</p>
-                <p class="card-text"><b>address1:</b> {{this.address1}}</p>
-                <p class="card-text"><b>address2:</b> {{this.address2}}</p>
-                <p class="card-text"><img src="{{this.photo}}" style="width: 200px"
-                        alt="Property photo"> </p>
+                            <p class="card-text"><b>Property Type:</b> {{this.propertype}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text"><b>Bedrooms:</b> {{this.bedrooms}}</p>
+                            <p class="card-text"><b>Bathrooms:</b> {{this.bathrooms}}</p>
+                            <p class="card-text"><b>Ownership Type:</b> {{this.ownershiptype}}</p>
+                            <p class="card-text"><b>Features:</b> {{this.ammenities}}</p>
+                            <p class="card-text"><b>Ammenities Nearby:</b> {{this.ammenitiesnearby}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <hr>
+
         </div>
-    </div>
     </a>
     {{/each}}
+    </div>
 </section>

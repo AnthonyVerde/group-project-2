@@ -4,46 +4,67 @@
 
 <section class="container white-bg-container">
     <div class="row justify-content-md-center">
-        <div class="col-12">
-            <h2>Site administrator's page</h2>
+        <div class="col-12 page-banner">
+            <h3>ADMININSTRATORS</h3>
             <h1>There are {{allOwners.length}} owners </h1>
-            <p>Here the administrator can manage the users, owners and properties.</p>
+            <p>As administrator, you can manage clients, owners, and properties.</p>
         </div>
     </div>
-    <hr>
+
     <!--div class="alert alert-success" role="alert" id="ownersBanner">
         OWNERS
     </div-->
     <div class="row justify-content-md-center" id="ownersTable">
         {{#each allOwners}}
         <li>
-            <div class="row">
-                <div class="col-12" id="ownersTableResults">
+            <div class="row" id="user-wrapper">
+                <div class="col-12">
                     <div class="user-box">
-                    USER {{this.id}}
-                    <p id="username-text">{{this.firstName}} {{this.lastName}}</p>
-                    <a href="/owner/edit/{{this.id}}"><button type="button" class="btn btn-success">EDIT</button></a>
-                    <button type="button" class="btn btn-danger adminDeleteOwner" ownerId={{this.id}}>DELETE</button>
+                        <div class="row">
+                            <div class="col-6">
+                                USER {{this.id}}
+                                <p id="username-text">{{this.firstName}} {{this.lastName}}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="user-buttons">
+                                    <a href="/owner/edit/{{this.id}}"><button type="button"
+                                            class="btn btn-success">Edit User {{this.id}}</button></a>
+                                    <button type="button" class="btn btn-danger adminDeleteOwner"
+                                        ownerId={{this.id}}>Delete User {{this.id}}</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+
                     {{#each this.properties}}
+                    <div class="row">
+                        <div class="col-4" id="propertyImg">
+                            <img src={{this.photo}}>
+                            <br>
+                            <br>
+                            <h4><b>Price: {{this.price_string}}</b></h4>
+                        </div>
+
+                        <div class="col-8" id="propertyDescription">
+                            
+                            <p>{{this.info}}</p>
+                            <div class="property-buttons">
+                                <a href="/property/edit/{{this.id}}"><button type="button"
+                                        class="btn btn-success">Edit Property</button></a>
+                                <button type="button" class="btn btn-danger adminDeleteProperty"
+                                    propId={{this.id}}>Delete Property</button>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <hr>
-                    <div class="col-12" id="propertyImg">
-                    <img src={{this.photo}} height="75" width="75">
-                    </div>
-                    <div class="col-12" id="propertyDescription">
-                    <h2>{{this.price_string}}</h2>
-                    <p>{{this.info}}</p>
-                    </div>
-                    <a href="/property/edit/{{this.id}}"><button type="button" class="btn btn-success">EDIT</button></a>
-                    <button type="button" class="btn btn-danger adminDeleteProperty" propId={{this.id}}>DELETE</button>
                     {{/each}}
-                    
+
                 </div>
             </div>
         </li>
         {{/each}}
-
-
     </div>
 </section>
-
