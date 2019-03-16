@@ -9,8 +9,8 @@
             {{#if client}}
             <li class="nav-item">
                 <span class="text-primary">Logged as <b>{{client.username}}</b></span>
-                <a href="/client/{{client.id}}/info"><button type="button" class="btn btn-primary topnav-btn">Account
-                        info</button></a>
+                <a href="/client/{{client.id}}/info"><button type="button" class="btn btn-primary topnav-btn">Account info</button></a>
+                <a href="/"><button type="button" class="btn btn-danger topnav-btn">LOG OUT</button></a>
             </li>
             {{else}}
             <li class="nav-item">
