@@ -45,6 +45,8 @@
 							id="propInputPostalCode" value="{{property.postalcode}}"></p>
 					<p class="card-text"><b>Proper Type: </b><input class="form-control mr-sm-2" type="text"
 							id="propInputProperType" value="{{property.propertype}}"></p>
+					<p class="card-text"><b>Proper Price String: </b><input class="form-control mr-sm-2" type="text"
+							id="propInputPrice_dec" value="{{property.price_dec}}"></p>
 				</div>
 				<div class="col-6">
 					<p class="card-text"><b>Bedrooms: </b><input class="form-control mr-sm-2" type="text"
@@ -63,9 +65,9 @@
 	</div>
 	<div class="client-buttons">
 
-			<button class="btn btn-success my-2 my-sm-0" type="button" id="updateProperty">UPDATE</button>
-			{{!-- <a href="/property/{{property.id}}"><button type="button" class="btn btn-warning" id="updateProperty">UPDATE</button></a> --}}
-			<a href="/property/{{property.id}}"><button type="button" class="btn btn-danger">CANCEL</button></a>
+		<button class="btn btn-success my-2 my-sm-0" type="button" id="updateProperty">UPDATE</button>
+		{{!-- <a href="/property/{{property.id}}"><button type="button" class="btn btn-warning" id="updateProperty">UPDATE</button></a> --}}
+		<a href="/property/{{property.id}}"><button type="button" class="btn btn-danger">CANCEL</button></a>
 
 	</div>
 </section>

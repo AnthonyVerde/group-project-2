@@ -36,24 +36,24 @@
         <div>
             <h3>{{client.firstName}}'s Favourite Properties</h3>
         </div>
+        {{#each favorites}}
         <div class="row">
-            <div class="col-md-auto">
-                ***** Property 1 *****
-                <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
+            <div class="col-4" id="propertyImg">
+                <img src={{property.photo}}>
+                <br>
+                <br>
+                <h4><b>Price: {{property.price_string}}</b></h4>
+            </div>
+
+            <div class="col-8" id="propertyDescription">
+
+                <p>{{property.info}}</p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-auto">
-                ***** Property 2 *****
-                <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-auto">
-                ***** Property 3 *****
-                <a href="/client"><button type="button" class="btn btn-danger">DELETE FAVOURITE</button></a>
-            </div>
-        </div>
+
+
+        <hr>
+        {{/each}}
     </div>
 
 </section>

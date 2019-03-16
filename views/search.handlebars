@@ -10,7 +10,7 @@
     </div>
     <div class="property-information">
         {{#each results}}
-        <a href="/property/{{id}}" id="searchResults">
+        
             <div class="row">
                 <div class="card property-card">
                     <div class="card-body">
@@ -26,12 +26,12 @@
                                         alt="Property photo">
                                     <div class="overlay">
                                         <h2>{{address1}}</h2>
-                                        <a class="info" href="#" value={{id}}>Favorite</a>
+                                        <a class="info favorite" value={{id}} onclick="handleFavorite(this);">Favorite</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-8">
-                                <p class="card-text">{{this.info}}</p>
+                                <a href="/property/{{id}}" style= "color:black;"><p class="card-text">{{this.info}}</a></p>
                             </div>
                         </div>
                         <div class="row">

@@ -55,7 +55,12 @@ var API = {
       url: "../../api/owner/" + editedInfo.ownerId,
       data: JSON.stringify(editedInfo)
     }).then(function(data) {
+      if (editedInfo.admin){
+        window.location.href = "/admin";
+      }
+      else{
       window.location.href = "/owner/" + data;
+      }
     });
   },
 
@@ -83,7 +88,13 @@ var API = {
       url: "../../api/property/" + editedInfo.propertyId,
       data: JSON.stringify(editedInfo)
     }).then(function(data) {
+      console.log(window.location.href);
+      if (editedInfo.admin){
+        window.location.href = "/admin";
+      }
+      else{
       window.location.href = "/owner/" + data;
+      }
     });
   },
 
@@ -135,7 +146,7 @@ var API = {
       //   "Content-Type": "application/json"
       // },
       type: "GET",
-      url: "../../search/" + keyword,
+      url: "../../search/" + keyword
       // data: JSON.stringify(editedInfo)
     }).then(function(data) {
       window.location.href = "/search/" + data;
@@ -146,6 +157,24 @@ var API = {
     // }).then(function(data) {
     //   return data;
     // });
+  },
+
+  addFavorite(clientId, propId){
+    return $.ajax({
+      url: "api/favorite/" + clientId +"and"+ propId,
+      type: "POST"
+    }).then(function(data) {
+      return data;
+    });
+  },
+
+  deleteFavorite(clientId, propId){
+    return $.ajax({
+      url: "../../api/favorite/"+ clientId +"and"+ propId,
+      type: "DELETE"
+    }).then(function() {
+      return data;
+    });
   }
 };
 
@@ -154,23 +183,49 @@ var API = {
 // Function called when adding a property
 var handleAddProperty = function(event) {
   event.preventDefault();
-  
+
   // Gathering all elements to create a new item
   var newPropertyInfo = {
     ownerId: $("#idtag").data("tag"),
-    info: $("#propInputInfo").val().trim(),
-    address1: $("#propInputAddress1").val().trim(),
-    address2: $("#propInputAddress2").val().trim(),
-    postalcode: $("#propInputPostalCode").val().trim(),
-    propertype: $("#propInputProperType").val().trim(),
-    price_string: $("#propInputPrice_string").val().trim(),
-    price_dec: $("#propInputPrice_dec").val().trim(),
-    bedrooms: $("#propInputBedrooms").val().trim(),
-    bathrooms: $("#propInputBathrooms").val().trim(),
-    ownershiptype: $("#propInputOwnershipType").val().trim(),
-    ammenities: $("#propInputAmmenities").val().trim(),
-    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
-    photo: $("#propInputPhoto").val().trim(),
+    info: $("#propInputInfo")
+      .val()
+      .trim(),
+    address1: $("#propInputAddress1")
+      .val()
+      .trim(),
+    address2: $("#propInputAddress2")
+      .val()
+      .trim(),
+    postalcode: $("#propInputPostalCode")
+      .val()
+      .trim(),
+    propertype: $("#propInputProperType")
+      .val()
+      .trim(),
+    price_string: $("#propInputPrice_string")
+      .val()
+      .trim(),
+    price_dec: $("#propInputPrice_dec")
+      .val()
+      .trim(),
+    bedrooms: $("#propInputBedrooms")
+      .val()
+      .trim(),
+    bathrooms: $("#propInputBathrooms")
+      .val()
+      .trim(),
+    ownershiptype: $("#propInputOwnershipType")
+      .val()
+      .trim(),
+    ammenities: $("#propInputAmmenities")
+      .val()
+      .trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby")
+      .val()
+      .trim(),
+    photo: $("#propInputPhoto")
+      .val()
+      .trim()
   };
 
   // Call the funtion to create a new item and pass the new info
@@ -185,21 +240,47 @@ var handleUpdateProperty = function(event) {
   var editedInfo = {
     propertyId: $("#propertyTag").data("tag"),
     ownerId: $("#ownerTag").data("tag"),
-    info: $("#propInputInfo").val().trim(),
-    address1: $("#propInputAddress1").val().trim(),
-    address2: $("#propInputAddress2").val().trim(),
-    postalcode: $("#propInputPostalCode").val().trim(),
-    propertype: $("#propInputProperType").val().trim(),
-    price_string: $("#propInputPrice_string").val().trim(),
-    price_dec: $("#propInputPrice_dec").val().trim(),
-    bedrooms: $("#propInputBedrooms").val().trim(),
-    bathrooms: $("#propInputBathrooms").val().trim(),
-    ownershiptype: $("#propInputOwnershipType").val().trim(),
-    ammenities: $("#propInputAmmenities").val().trim(),
-    ammenitiesnearby: $("#propInputAmmenitiesNearby").val().trim(),
-    photo: $("#propInputPhoto").val().trim(),
+    info: $("#propInputInfo")
+      .val()
+      .trim(),
+    address1: $("#propInputAddress1")
+      .val()
+      .trim(),
+    address2: $("#propInputAddress2")
+      .val()
+      .trim(),
+    postalcode: $("#propInputPostalCode")
+      .val()
+      .trim(),
+    propertype: $("#propInputProperType")
+      .val()
+      .trim(),
+    price_string: $("#propInputPrice_string")
+      .val()
+      .trim(),
+    price_dec: $("#propInputPrice_dec")
+      .val()
+      .trim(),
+    bedrooms: $("#propInputBedrooms")
+      .val()
+      .trim(),
+    bathrooms: $("#propInputBathrooms")
+      .val()
+      .trim(),
+    ownershiptype: $("#propInputOwnershipType")
+      .val()
+      .trim(),
+    ammenities: $("#propInputAmmenities")
+      .val()
+      .trim(),
+    ammenitiesnearby: $("#propInputAmmenitiesNearby")
+      .val()
+      .trim(),
+    photo: $("#propInputPhoto")
+      .val()
+      .trim()
   };
-
+  editedInfo.admin = true;
   // Call the update funtion and pass the updated propertyinfo
   API.updateProperty(editedInfo);
 };
@@ -252,21 +333,43 @@ var handleUpdateOwner = function(event) {
   // Gathering all elements to update the registry with
   var editedInfo = {
     ownerId: $("#idtag").data("tag"),
-    username: $("#propInputUsername").val().trim(),
-    password: $("#propInputPassword").val().trim(),
-    firstName: $("#propInputfirstName").val().trim(),
-    lastName: $("#propInputLastName").val().trim(),
-    email: $("#propInputEmail").val().trim(),
-    phone: $("#propInputPhone").val().trim(),
-    address1: $("#propInputAddress1").val().trim(),
-    address2: $("#propInputAddress2").val().trim(),
-    city: $("#propInputCity").val().trim(),
-    province: $("#propInputProvince").val().trim(),
-    country: $("#propInputCountry").val().trim(),
+    username: $("#propInputUsername")
+      .val()
+      .trim(),
+    password: $("#propInputPassword")
+      .val()
+      .trim(),
+    firstName: $("#propInputfirstName")
+      .val()
+      .trim(),
+    lastName: $("#propInputLastName")
+      .val()
+      .trim(),
+    email: $("#propInputEmail")
+      .val()
+      .trim(),
+    phone: $("#propInputPhone")
+      .val()
+      .trim(),
+    address1: $("#propInputAddress1")
+      .val()
+      .trim(),
+    address2: $("#propInputAddress2")
+      .val()
+      .trim(),
+    city: $("#propInputCity")
+      .val()
+      .trim(),
+    province: $("#propInputProvince")
+      .val()
+      .trim(),
+    country: $("#propInputCountry")
+      .val()
+      .trim()
   };
 
   // Call the update funtion and pass the updted info
-  API.updateOwner(editedInfo);
+  
 };
 
 // Owner log in
@@ -275,8 +378,12 @@ var handleBtnOwnerLogin = function() {
 
   var wrongPassLbl = false;
   var client = {
-    username: $("#ownerUsername").val().trim(),
-    password: $("#ownerPassword").val().trim()
+    username: $("#ownerUsername")
+      .val()
+      .trim(),
+    password: $("#ownerPassword")
+      .val()
+      .trim()
   };
 
   API.getOwner(client).then(function(data) {
@@ -323,6 +430,7 @@ var handleAdminDeleteOwner = function() {
   });
 };
 
+
 $updateOwner.on("click", handleUpdateOwner);
 $ownerLogin.on("click", handleBtnOwnerLogin);
 $(".adminDeleteOwner").on("click", handleAdminDeleteOwner);
@@ -347,12 +455,24 @@ var handleUpdateClient = function(event) {
   // Gathering all elements to update the registry with
   var editedInfo = {
     clientId: $("#idtag").data("tag"),
-    username: $("#propInputUsername").val().trim(),
-    password: $("#propInputPassword").val().trim(),
-    firstName: $("#propInputfirstName").val().trim(),
-    lastName: $("#propInputLastName").val().trim(),
-    email: $("#propInputEmail").val().trim(),
-    phone: $("#propInputPhone").val().trim()
+    username: $("#propInputUsername")
+      .val()
+      .trim(),
+    password: $("#propInputPassword")
+      .val()
+      .trim(),
+    firstName: $("#propInputfirstName")
+      .val()
+      .trim(),
+    lastName: $("#propInputLastName")
+      .val()
+      .trim(),
+    email: $("#propInputEmail")
+      .val()
+      .trim(),
+    phone: $("#propInputPhone")
+      .val()
+      .trim()
   };
 
   // Call the update funtion and pass the updted info
@@ -365,8 +485,12 @@ var handleBtnClientLogin = function() {
 
   var wrongPassLbl = false;
   var client = {
-    username: $("#clientUsername").val().trim(),
-    password: $("#clientPassword").val().trim()
+    username: $("#clientUsername")
+      .val()
+      .trim(),
+    password: $("#clientPassword")
+      .val()
+      .trim()
   };
 
   API.getClient(client).then(function(data) {
@@ -412,7 +536,8 @@ var handleSearchClient = function() {
   var keyword = $("#keyword")
     .val()
     .trim();
-  window.location.href = "/search/" + keyword + "/" + $("#searchClient").data("clientid");
+  window.location.href =
+    "/search/" + keyword + "/" + $("#searchClient").data("clientid");
   // API.search(keyword);
 };
 
@@ -442,6 +567,41 @@ $("#ownerLogIn").on("click", function() {
     keyboard: false
   });
 });
+
+//Handle Favorite
+$(".favorite").on("click", handleFavorite);
+
+var handleFavorite = function(res) {
+  if (window.location.href.split("/").length === 5) {
+    var clientLogged = false;
+  } else {
+    var clientLogged = true;
+    var clientId = window.location.href.split("/")[5];
+  }
+  console.log();
+  console.log("Here");
+  if (clientLogged) {
+    var text = $(res).text();
+    console.log(text);
+    var propId = $(this).attr("value");
+    if (text === "Favorite") {
+      // API.addFavorite(clientId, propId)
+      $(".favorite").css("color", "lightgreen");
+      $(".favorite").html(
+        "<b>Favorited <span class='glyphicon glyphicon-heart-empty'></span></b>"
+      );
+    } else {
+      // API.deleteFavorite(propId)
+      $(".favorite").css("color", "white");
+      $(".favorite").html("Favorite");
+    }
+  } else {
+    $.alert({
+      title: "You are not logged in!",
+      content: "Please log in to use this feature"
+    });
+  }
+};
 
 // Modal validation logic
 $("#btnLogin").click(function(event) {
