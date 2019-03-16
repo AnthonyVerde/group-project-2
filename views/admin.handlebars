@@ -27,8 +27,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="user-buttons">
-                                    <a href="/owner/edit/{{this.id}}"><button type="button"
-                                            class="btn btn-success">Edit User {{this.id}}</button></a>
+                                    <a href="/owner/edit/{{this.id}}"><button type="button" class="btn btn-success">Edit
+                                            User {{this.id}}</button></a>
                                     <button type="button" class="btn btn-danger adminDeleteOwner"
                                         ownerId={{this.id}}>Delete User {{this.id}}</button>
                                 </div>
@@ -47,11 +47,11 @@
                         </div>
 
                         <div class="col-8" id="propertyDescription">
-                            
+
                             <p>{{this.info}}</p>
                             <div class="property-buttons">
-                                <a href="/property/edit/{{this.id}}"><button type="button"
-                                        class="btn btn-success">Edit Property</button></a>
+                                <a href="/property/edit/{{this.id}}"><button type="button" class="btn btn-success">Edit
+                                        Property</button></a>
                                 <button type="button" class="btn btn-danger adminDeleteProperty"
                                     propId={{this.id}}>Delete Property</button>
                             </div>
@@ -67,4 +67,28 @@
         </li>
         {{/each}}
     </div>
+    <hr>
+    <div class="row justify-content-md-center">
+        <div class="col-12 page-banner">
+            <h1>There are {{allClients.length}} clients </h1>
+        </div>
+    </div>
+    {{#each allClients}}
+    <div class="user-box">
+        <div class="row">
+            <div class="col-6">
+                Client {{this.id}}
+                <p id="username-text">{{this.firstName}} {{this.lastName}}</p>
+            </div>
+            <div class="col-6">
+                <div class="user-buttons">
+                    <a href="/owner/edit/{{this.id}}"><button type="button" class="btn btn-success">Edit User
+                            {{this.id}}</button></a>
+                    <button type="button" class="btn btn-danger adminDeleteOwner" ownerId={{this.id}}>Delete User
+                        {{this.id}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
 </section>
