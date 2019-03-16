@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "propertydb2",
+    "database": "propertydb",
     "host": "localhost",
     "dialect": "mysql"
   },

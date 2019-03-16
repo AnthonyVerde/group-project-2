@@ -162,6 +162,7 @@ body {
   background-color: lightgray;
   margin-top: 20px;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 #username-text {
@@ -181,7 +182,7 @@ body {
 }
 
 #propertyImg img {
-  width: 300px;
+  width: 200px;
   height: 200px;
 }
 
@@ -193,6 +194,10 @@ body {
 .property-buttons {
   padding-top: 20px;
   text-align: right;
+}
+
+.client-cards-narrow {
+  float: left;
 }
 
 /*client styles*/

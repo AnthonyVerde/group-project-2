@@ -8,55 +8,57 @@
             <h1>Search results</h1>
         </div>
     </div>
-   <div class="property-information">
-    {{#each results}}
-    <a href="/property/{{id}}" id="searchResults">
-    <div class="row">
-            <div class="card property-card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-10 col-xs-12">
-                            {{!-- <p class="card-text"> <img src="{{this.photo}}" style="width: 200px"
+    <div class="property-information">
+        {{#each results}}
+        <a href="/property/{{id}}" id="searchResults">
+            <div class="row">
+                <div class="card property-card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-10 col-xs-12">
+                                {{!-- <p class="card-text"> <img src="{{this.photo}}" style="width: 200px"
                                     alt="Property photo">
                             </p>
                             <h4 class="card-text"><b>Price: {{this.price_string}}</b></h4> --}}
-                                                    <div class="hovereffect">
-                                {{!-- This is the only image line --}}
-                                <img class="img-responsive" src="{{this.photo}}" style="width: 100%" alt="Property photo">
-                                <div class="overlay">
-                                    <h2>{{address1}}</h2>
-                                    <a class="info" href="#" value={{id}}>Favorite</a>
+                                <div class="hovereffect">
+                                    {{!-- This is the only image line --}}
+                                    <img class="img-responsive" src="{{this.photo}}" style="width: 100%"
+                                        alt="Property photo">
+                                    <div class="overlay">
+                                        <h2>{{address1}}</h2>
+                                        <a class="info" href="#" value={{id}}>Favorite</a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-8">
+                                <p class="card-text">{{this.info}}</p>
+                            </div>
                         </div>
-                        <div class="col-8">
-                            <p class="card-text">{{this.info}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                        </div>
-                        <div class="col-4">
-                            <p class="card-text"><b>Address:</b><br>
-                                {{this.address1}}<br>{{this.address2}}<br>{{this.postalcode}}
-                            </p>
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-4">
+                                <h4 class="card-text"><b>Price: {{this.price_string}}</b></h4>
+                            </div>
+                            <div class="col-xs-12 col-lg-4">
+                                <p class="card-text"><b>Address:</b><br>
+                                    {{this.address1}}<br>{{this.address2}}<br>{{this.postalcode}}
+                                </p>
 
-                            <p class="card-text"><b>Property Type:</b> {{this.propertype}}</p>
-                        </div>
-                        <div class="col-4">
-                            <p class="card-text"><b>Bedrooms:</b> {{this.bedrooms}}</p>
-                            <p class="card-text"><b>Bathrooms:</b> {{this.bathrooms}}</p>
-                            <p class="card-text"><b>Ownership Type:</b> {{this.ownershiptype}}</p>
-                            <p class="card-text"><b>Features:</b> {{this.ammenities}}</p>
-                            <p class="card-text"><b>Ammenities Nearby:</b> {{this.ammenitiesnearby}}</p>
+                                <p class="card-text"><b>Property Type:</b> {{this.propertype}}</p>
+                            </div>
+                            <div class="col-xs-12 col-lg-4">
+                                <p class="card-text"><b>Bedrooms:</b> {{this.bedrooms}}</p>
+                                <p class="card-text"><b>Bathrooms:</b> {{this.bathrooms}}</p>
+                                <p class="card-text"><b>Ownership Type:</b> {{this.ownershiptype}}</p>
+                                <p class="card-text"><b>Features:</b> {{this.ammenities}}</p>
+                                <p class="card-text"><b>Ammenities Nearby:</b> {{this.ammenitiesnearby}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </a>
-    {{/each}}
+            </div>
+        </a>
+        {{/each}}
     </div>
 </section>
 
