@@ -20,7 +20,7 @@
 </nav>
 
 <section class="container">
-   <div class="row justify-content-lg-center">
+    <div class="row justify-content-lg-center">
         <div class="col-12" id="logo-container">
             <img src="/images/property-pal-logo-stacked.png" alt="" class="mb-5 mt-5">
         </div>
@@ -28,57 +28,60 @@
     <!--new search bar-->
 
     <div class="container" id="search-bar">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card search-bar-bg">
-                    <div class="card-body">
-                        <div class="row">
+        <form>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="card search-bar-bg">
+                        <div class="card-body">
+                            <div class="row">
 
-                            <!--keyword input-->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <input id="keyword" type="text" class="form-control" placeholder="City, Postal Code, Keyword">
+                                <!--keyword input-->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input id="keyword" type="text" class="form-control"
+                                            placeholder="City, Postal Code, Keyword">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!--property type input-->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Property Type</option>
-                                        <option>Condo</option>
-                                        <option>House</option>
-                                        <option>Industrial</option>
-                                        <option>Vacant land</option>
-                                    </select>
+                                <!--property type input-->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Property Type</option>
+                                            <option>Condo</option>
+                                            <option>House</option>
+                                            <option>Industrial</option>
+                                            <option>Vacant land</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!--price range input-->
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Price Range</option>
-                                        <option>$1-$49,999</option>
-                                        <option>$50,000-$99,999</option>
-                                        <option>$100,000-$299,999</option>
-                                        <option>$300,000-$499,999</option>
-                                        <option>$500,000-$699,999</option>
-                                        <option>$700,000-$899,000</option>
-                                        <option>$900,000+</option>
-                                    </select>
+                                <!--price range input-->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <select id="inputState" class="form-control">
+                                            <option selected>Price Range</option>
+                                            <option>$1-$49,999</option>
+                                            <option>$50,000-$99,999</option>
+                                            <option>$100,000-$299,999</option>
+                                            <option>$300,000-$499,999</option>
+                                            <option>$500,000-$699,999</option>
+                                            <option>$700,000-$899,000</option>
+                                            <option>$900,000+</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!--submit button-->
-                            <div class="col-md-3">
-                                <button type="button" id="search" class="btn btn-dark mainSearchBtn">Search</button>
+                                <!--submit button-->
+                                <div class="col-md-3">
+                                    <button type="submit" id="search" class="btn btn-dark mainSearchBtn">Search</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!--<div class="row justify-content-lg-center">
@@ -100,7 +103,7 @@
             </form>
         </div>
     </div> -->
-  
+
 </section>
 
 <div id="clientModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

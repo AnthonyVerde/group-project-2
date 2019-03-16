@@ -54,9 +54,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
-    property.hasMany(models.favorite, {
-      onDelete: "cascade"
-    });
   };
 
   return property;
