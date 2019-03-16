@@ -7,11 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
-    favorite.belongsTo(models.property, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+    favorite.hasMany(models.property, {});
   };
 
   return favorite;

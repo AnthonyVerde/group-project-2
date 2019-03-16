@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" id="nav-logo-container" href="/"><img src="/images/property-pal-logo-horiz.png"></a>
+    <a class="navbar-brand" id="nav-logo-container" href="/client/{{client.id}}"><img
+            src="/images/property-pal-logo-horiz.png"></a>
 </nav>
 
 <section class="container white-bg-container">
@@ -8,6 +9,7 @@
 
             <h1>Welcome back {{client.firstName}}!</h1>
             <p> You can to see/edit your information as well as manage favorites.</p>
+            <a href="/client/{{client.id}}"><button type="button" class="btn btn-primary">Search properties</button></a>
         </div>
     </div>
 

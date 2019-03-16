@@ -1,6 +1,8 @@
 // Get references to page elements
 var $clientLogin = $("#btnClientLogin");
 var $updateClient = $("#updateClient");
+var clientLogged = false; // If a client is logged it will set to TRUE
+var clientLoggedId = ""; // When a client is logged it will hold it clientId
 
 var $ownerLogin = $("#btnOwnerLogin");
 var $updateOwner = $("#updateOwner");
@@ -154,7 +156,7 @@ var API = {
 // Function called when adding a property
 var handleAddProperty = function(event) {
   event.preventDefault();
-  
+
   // Gathering all elements to create a new item
   var newPropertyInfo = {
     ownerId: $("#idtag").data("tag"),
@@ -282,8 +284,8 @@ var handleBtnOwnerLogin = function() {
   API.getOwner(client).then(function(data) {
     if (
       $("#ownerPassword")
-        .val()
-        .trim() === data.password
+      .val()
+      .trim() === data.password
     ) {
       console.log("Password matches");
       $("#psswdLbl").html("Password");
@@ -375,10 +377,17 @@ var handleBtnClientLogin = function() {
         .val()
         .trim() === data.password
     ) {
+      // The client has loggied in succesfully
       console.log("Password matches");
       $("#psswdLbl").html("Password");
-      window.location.href = "/client/" + data.id;
+
+      clientLogged = true;
+      clientLoggedId = data.id;
+
+      window.location.href = "/client/" + clientLoggedId;
+
     } else {
+      // Wrong password
       console.log("Wrong password");
       if (!wrongPassLbl) {
         $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
@@ -403,7 +412,18 @@ var handleSearch = function() {
   // API.search(keyword);
 };
 
+// LOGGED client searching for properties
+var handleSearchClient = function() {
+  event.preventDefault();
+  var keyword = $("#keyword")
+    .val()
+    .trim();
+  window.location.href = "/search/" + keyword + "/" + $("#searchClient").data("clientid");
+  // API.search(keyword);
+};
+
 $("#search").on("click", handleSearch);
+$("#searchClient").on("click", handleSearchClient);
 
 //////// MODAL logic
 

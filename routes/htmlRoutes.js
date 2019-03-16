@@ -1,14 +1,14 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Load landing page page when browsing the root URL
+  // Load landing page when browsing the root URL
   app.get("/", function(req, res) {
     res.render("index");
   });
 
   /////////// Routes for CLIENTS ///////////
 
-  // Load CLIENT info page based on clientId
+  // Load landing page for LOGGED CLIENT
   app.get("/client/:id", function(req, res) {
     db.client
       .findOne({
@@ -18,7 +18,28 @@ module.exports = function(app) {
       })
       .then(function(dbClient) {
         console.log(
-          "Serving page for client: " +
+          "Serving landing page for client: " +
+            dbClient.username +
+            " with Id:" +
+            dbClient.id
+        );
+        res.render("index", {
+          client: dbClient
+        });
+      });
+  });
+
+  // Load CLIENT info page based on clientId
+  app.get("/client/:id/info", function(req, res) {
+    db.client
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbClient) {
+        console.log(
+          "Serving INFO page for client: " +
             dbClient.username +
             " with Id:" +
             dbClient.id
@@ -183,7 +204,7 @@ module.exports = function(app) {
   /////////// Routes for SEARCH ///////////
 
   // Load search results page
-  app.get("/search/:keyword", function (req, res) {
+  app.get("/search/:keyword", function(req, res) {
     db.property
       .findAll({
         where: {
@@ -210,6 +231,54 @@ module.exports = function(app) {
         res.render("search", {
           results: dbOwner
         });
+      });
+  });
+
+  // Load search results page for a LOGGED client
+  app.get("/search/:keyword/:id", function(req, res) {
+    var searchResult, clientInfo;
+
+    db.client
+      .findOne({
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(function(dbOwner) {
+        clientInfo = dbOwner;
+
+        db.property
+          .findAll({
+            where: {
+              $or: {
+                address2: {
+                  $like: "%" + req.params.keyword + "%"
+                },
+                info: {
+                  $like: "%" + req.params.keyword + "%"
+                },
+                ammenities: {
+                  $like: "%" + req.params.keyword + "%"
+                },
+                ownershiptype: {
+                  $like: "%" + req.params.keyword + "%"
+                },
+                ammenitiesnearby: {
+                  $like: "%" + req.params.keyword + "%"
+                }
+              }
+            }
+          })
+          .then(function(dbProperty) {
+            searchResult = dbProperty;
+
+            res.render("searchclient", {
+              results: searchResult,
+              client: clientInfo
+            });
+            console.log("===================");
+            console.log(clientInfo.id);
+          });
       });
   });
 
