@@ -6,6 +6,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav justify-content-end">
+            {{#if client}}
+            <li class="nav-item">
+                <span class="text-primary">Logged as <b>{{client.username}}</b></span>
+                <a href="/client/{{client.id}}/info"><button type="button" class="btn btn-primary topnav-btn">Account
+                        info</button></a>
+            </li>
+            {{else}}
             <li class="nav-item">
                 <button type="button" class="btn btn-primary topnav-btn" id="clientLogIn">Log in</button>
             </li>
@@ -15,6 +22,7 @@
             <li class="nav-item">
                 <a href="/admin"><button type="button" class="btn btn-secondary topnav-btn">Administrator</button></a>
             </li>
+            {{/if}}
         </ul>
     </div>
 </nav>
@@ -74,7 +82,11 @@
 
                                 <!--submit button-->
                                 <div class="col-md-3">
+                                    {{#if client}}
+                                    <button type="submit" id="searchClient" data-clientid="{{client.id}}" class="btn btn-dark mainSearchBtn">Search</button>
+                                    {{else}}
                                     <button type="submit" id="search" class="btn btn-dark mainSearchBtn">Search</button>
+                                    {{/if}}
                                 </div>
                             </div>
                         </div>

@@ -375,10 +375,13 @@ var handleBtnClientLogin = function() {
         .val()
         .trim() === data.password
     ) {
+      // The client has loggied in succesfully
       console.log("Password matches");
       $("#psswdLbl").html("Password");
+
       window.location.href = "/client/" + data.id;
     } else {
+      // Wrong password
       console.log("Wrong password");
       if (!wrongPassLbl) {
         $("#psswdLbl").html("Password - <b>WRONG PASSWORD!</b>");
@@ -403,7 +406,18 @@ var handleSearch = function() {
   // API.search(keyword);
 };
 
+// LOGGED client searching for properties
+var handleSearchClient = function() {
+  event.preventDefault();
+  var keyword = $("#keyword")
+    .val()
+    .trim();
+  window.location.href = "/search/" + keyword + "/" + $("#searchClient").data("clientid");
+  // API.search(keyword);
+};
+
 $("#search").on("click", handleSearch);
+$("#searchClient").on("click", handleSearchClient);
 
 //////// MODAL logic
 
